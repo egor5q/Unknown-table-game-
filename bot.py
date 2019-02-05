@@ -7,19 +7,22 @@ import threading
 from emoji import emojize
 from telebot import types
 from pymongo import MongoClient
-
+import game_classes
 
 token = os.environ['TELEGRAM_TOKEN']
 bot = telebot.TeleBot(token)
 
 
 client=MongoClient(os.environ['database'])
-db=client.
+db=client.unknown
 users=db.users
 
 
+@bot.message_handler(commands=['creategame'])
+def creategame(m):
+   game=Game(m)
 
-if True:
-   print('7777')
-   bot.polling(none_stop=True,timeout=600)
+
+print('7777')
+bot.polling(none_stop=True,timeout=600)
 
