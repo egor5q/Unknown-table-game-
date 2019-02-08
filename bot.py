@@ -8,6 +8,7 @@ from emoji import emojize
 from telebot import types
 from pymongo import MongoClient
 import game_classes
+import games
 
 token = os.environ['TELEGRAM_TOKEN']
 bot = telebot.TeleBot(token)
@@ -16,7 +17,6 @@ bot = telebot.TeleBot(token)
 client=MongoClient(os.environ['database'])
 db=client.unknown
 users=db.users
-
 
 @bot.message_handler(commands=['creategame'])
 def creategame(m):
