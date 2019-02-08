@@ -45,6 +45,7 @@ def startgame(m):
     except:
         game=None
     if game!=None:
+        game.canceltimer=None
         game.startgame()
          
 @bot.callback_query_handler(func=lambda call:True)
