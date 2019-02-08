@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import lobbys
 import tools
+games=lobbys.games
 
 class Game:
     
@@ -9,6 +10,8 @@ class Game:
         self.playerlist={},
         self.started=False
         self.message=None
+        self.canceltimer=None
+        self.gametimer=None
         
     def createplayer(self,user):
         self.playerlist.update({user.id:{
@@ -34,6 +37,11 @@ class Game:
         for ids in self.playerlist:
             text+=ids['name']+'\n'
         tools.medit(text, self.message.chat.id, self.message.message_id)
+        
+    def cancelgame(self):
+        if self.canceltimer!=None:
+            bot.send_message(self.id,'Игра была отменена!')
+            del games[self.id]
         
             
          
