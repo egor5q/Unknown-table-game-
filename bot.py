@@ -9,6 +9,7 @@ from telebot import types
 from pymongo import MongoClient
 import game_classes
 import lobbys
+from tools import medit
 games=lobbys.games
 
 token = os.environ['TELEGRAM_TOKEN']
@@ -30,7 +31,21 @@ def creategame(m):
             msg=bot.send_message(m.chat.id,'Набор участников для экспедиции открыт! Жмите "Присоединиться" для вступления в игру.',reply_markup=kb)
             game=games[m.chat.id]
             game.message=msg
-         
+            t=threading.Timer(5,game.cancelgame)
+            t.start()
+            game.canceltimer=t
+        else:
+            bot.send_message(m.chat.id, 'В эту игру нельзя играть в личке! Добавьте бота в какой-нибудь чат.')
+            
+            
+@bot.message_handler(commands=['startgame'])
+def startgame(m):
+    try:
+        game=games[m.chat.id]
+    except:
+        game=None
+    if game!=None:
+        game.startgame()
          
 @bot.callback_query_handler(func=lambda call:True)
 def inline(call): 
@@ -45,6 +60,9 @@ def inline(call):
                 game.createplayer(call.from_user)
                 bot.send_message(call.message.chat.id,call.from_user.first_name+' присоединился!')
                 game.m_update()
+    else:
+        bot.send_message(call.message.chat.id, call.from_user.first_name+', в этом чате нет запущенной игры! Сначала начните её '+
+                         'командой /creategame.')
       
    
 
