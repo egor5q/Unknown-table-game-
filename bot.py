@@ -21,6 +21,7 @@ users=db.users
 @bot.message_handler(commands=['creategame'])
 def creategame(m):
    game=Game(m)
+   games.update(game)
 
 
 print('7777')
