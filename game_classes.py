@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+import games
 class Game:
     
     def __init__(self,m):
