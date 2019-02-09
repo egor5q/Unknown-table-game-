@@ -1,13 +1,126 @@
 # -*- coding: utf-8 -*-
 import lobbys
 import tools
+import cards
 games=lobbys.games
 
-deck=['1','2','3','4','5','6','7','8']
+allcards=['unknown', 'infection', 'flame', 'analysis', 'axe', 'untruth', 'viski', 'persistence', 'around', 'newplace_near',
+         'newplace_far', 'soblazn', 'scare', 'stayhere', 'nothx', 'miss', 'nofire']
 
 class Game:
     
     def __init__(self,m):
+        deck=[]
+        for ids in allcards:
+            if ids=='unknown':
+                i=0
+                c=1
+                while i<c:
+                    deck.append(cards.Unknown)
+                    i+=1
+            if ids=='infection':
+                i=0
+                c=6
+                while i<c:
+                    deck.append(cards.Infection)
+                    i+=1
+            if ids=='flame':
+                i=0
+                c=6
+                while i<c:
+                    deck.append(cards.Flame)
+                    i+=1
+            if ids=='analysis':
+                i=0
+                c=6
+                while i<c:
+                    deck.append(cards.Analysis)
+                    i+=1
+            if ids=='axe':
+                i=0
+                c=6
+                while i<c:
+                    deck.append(cards.Axe)
+                    i+=1
+            if ids=='untruth':
+                i=0
+                c=6
+                while i<c:
+                    deck.append(cards.Untruth)
+                    i+=1
+            if ids=='viski':
+                i=0
+                c=6
+                while i<c:
+                    deck.append(cards.Viski)
+                    i+=1
+            if ids=='persistence':
+                i=0
+                c=6
+                while i<c:
+                    deck.append(cards.Persistence)
+                    i+=1
+            if ids=='persistence':
+                i=0
+                c=6
+                while i<c:
+                    deck.append(cards.Persistence)
+                    i+=1   
+            if ids=='around':
+                i=0
+                c=6
+                while i<c:
+                    deck.append(cards.Around)
+                    i+=1
+            if ids=='newplace_near':
+                i=0
+                c=6
+                while i<c:
+                    deck.append(cards.Newplace_near)
+                    i+=1
+            if ids=='newplace_far':
+                i=0
+                c=6
+                while i<c:
+                    deck.append(cards.Newplace_far)
+                    i+=1
+            if ids=='soblazn':
+                i=0
+                c=6
+                while i<c:
+                    deck.append(cards.Soblazn)
+                    i+=1
+            if ids=='scare':
+                i=0
+                c=6
+                while i<c:
+                    deck.append(cards.Scare)
+                    i+=1
+            if ids=='stayhere':
+                i=0
+                c=6
+                while i<c:
+                    deck.append(cards.Stayhere)
+                    i+=1
+            if ids=='nothx':
+                i=0
+                c=6
+                while i<c:
+                    deck.append(cards.Nothx)
+                    i+=1
+            if ids=='miss':
+                i=0
+                c=6
+                while i<c:
+                    deck.append(cards.Miss)
+                    i+=1
+            if ids=='nofire':
+                i=0
+                c=6
+                while i<c:
+                    deck.append(cards.Nofire)
+                    i+=1
+            
         self.id=m.chat.id
         self.playerlist={},
         self.started=False
