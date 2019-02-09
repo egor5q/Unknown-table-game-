@@ -19,6 +19,7 @@ class Game:
         self.handcards=4
         self.currentplayer=None
         self.doors=[]
+        self.onclock=True  # Ход по часовой стрелке или против
         
     def createplayer(self,user):
         self.playerlist.update({user.id:Player(user)})
@@ -67,12 +68,14 @@ class Player:
         self.id=id
         self.name=user.first_name
         self.id=user.id
-        self.role='good'     #good, evil or unknown (нечто)
+        self.role='good'     #good, infected or unknown (нечто)
         self.effects=[]      #все эффекты типо карантина, заколоченной двери итд
         self.cards=[]        #все карты в руке игрока
         self.alive=True
         self.place=None
-        self.active=False
+        self.active=False,
+        self.nears=[]
+        self.tradecard=None
         
     def turn(self):
         kb=types.InlineKeyboardMarkup()
