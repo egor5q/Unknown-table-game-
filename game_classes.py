@@ -18,6 +18,7 @@ class Game:
         self.trash=[]
         self.handcards=4
         self.currentplayer=None
+        self.doors=[]
         
     def createplayer(self,user):
         self.playerlist.update({user.id:Player(user)})
