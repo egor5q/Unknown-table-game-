@@ -10,6 +10,30 @@ class Card:
     def use(self, player, target=None):
         pass
     
+    def findnear(player,game):
+        x=player.number
+        near1=x+1
+        if near1>len(game.players):
+            near1=1
+        near2=x-1
+        if near2<1:
+            near2=len(game.players)
+        for ids in game.players:
+            if ids.place==near1:
+                near1=ids
+        for ids in game.players:
+            if ids.place==near2:
+                near2=ids
+        nears=[near1, near2]
+        return nears
+    
+    def allplayers(player,game):
+        nears=[]
+        for ids in game.players:
+            if ids.id!=player.id:
+                nears.append(ids)
+        return nears
+    
 class Unknown(Card):
     
     def __init__(self, player):
@@ -29,6 +53,8 @@ class Infection(Card):
                     inf=1
             if inf==0:
                 self.dropable=False
+        else:
+            self.dropable=False
             
         
         
@@ -141,7 +167,39 @@ class Newplace_near(Card):
         self.name='Меняемся местами!'
         
     def use(self, player, game):
-        pass
+        nearplayers=findnear(player, game)
+        player.nears=nearplayers
+        player.cards.remove(self)
+        
+class Newplace_far(Card):
+    
+    def __init__(self):
+        self.name='Сматывай удочки!'
+        
+    def use(self, player, game):
+        nearplayers=allplayers(player,game)
+        player.nears=nearplayers
+        player.cards.remove(self)
+        
+        
+        
+class Soblazn(Card):
+    
+    def __init__(self):
+        self.name='Соблазн'
+        
+    def use(self, player):
+        player.cards.remove(self)
+        
+        
+class Scare(Card):
+    
+    def __init__(self):
+        self.name='Страх'
+        
+    def use(self, player, target):
+        bot.send_message(player.id, 'Карта, от которой вы отказались: "'+target.tradecard.name+'".')
+        player.cards.remove(self)
                          
                          
         
