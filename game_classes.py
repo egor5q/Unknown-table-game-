@@ -158,6 +158,8 @@ class Game:
             players.append(self.playerlist[ids])
         self.currentplayer=random.choice(players)
         self.currentplayer.active=True
+        self.gametimer=threading.Timer(80, nextplayer, args=[self])
+        self.gametimer.start()
         
         self.currentplayer.turn()
         
