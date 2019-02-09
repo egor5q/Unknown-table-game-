@@ -7,8 +7,8 @@ class Card:
         self.dropable=True
         self.name=None
 
-    def use(self, player, target=None):
-        pass
+    def use(self, player, target=None, game=None):
+        return False
     
     def findnear(player,game):
         x=player.number
@@ -63,20 +63,22 @@ class Flame(Card):
     def __init__(self):
         self.name='Огнемёт'
     
-    def use(self, player, target=None):
+    def use(self, player, target=None, game=None):
         target.alive=False
+        return True
         
 class Analysis(Card):
     
     def __init__(self):
         self.name='Анализ'
     
-    def use(self, player, target=None):
+    def use(self, player, target=None, game=None):
         text=''
         for ids in target.cards:
             text+=ids.name+'\n'
         bot.send_message(player.id, 'Карты в руке игрока '+target.name+':\n\n'+text)
         player.cards.remove(self)
+        return True
         
 class Axe(Card):
     
@@ -102,6 +104,7 @@ class Axe(Card):
         
         bot.send_message(game.id, text)
         player.cards.remove(self)
+        return True
             
             
 class Untruth(Card):
@@ -116,6 +119,7 @@ class Untruth(Card):
         x=random.choice(cards)
         bot.send_message(player.id,'Вы смотрите случайную карту игрока '+target.name+'. Ей оказалась карта "'+x.name+'"!')
         player.cards.remove(self)
+        return True
         
 class Viski(Card):
     
@@ -128,6 +132,7 @@ class Viski(Card):
         for ids in player.cards:
             text+=ids.name+'\n'
         bot.send_message(game.id, player.name+' выпил виски, и выложил всю правду о себе. Вот его карты'+':\n\n'+text)
+        return True
         
 class Persistence(Card):   # Упорство
      
@@ -146,7 +151,8 @@ class Persistence(Card):   # Упорство
             show.append(x)
             cards.remove(x)
             i+=1
-        player.showlist=show    
+        player.showlist=show   
+        return True
         
 class Around(Card):
     
@@ -160,6 +166,7 @@ class Around(Card):
             game.onclock=True
         bot.send_message(game.id, 'Игрок '+player.name+' изменил направление хода!')
         player.cards.remove(self)
+        return True
                          
 class Newplace_near(Card):
     
@@ -170,6 +177,7 @@ class Newplace_near(Card):
         nearplayers=findnear(player, game)
         player.nears=nearplayers
         player.cards.remove(self)
+        return True
         
 class Newplace_far(Card):
     
@@ -180,6 +188,7 @@ class Newplace_far(Card):
         nearplayers=allplayers(player,game)
         player.nears=nearplayers
         player.cards.remove(self)
+        return True
         
         
         
@@ -190,6 +199,7 @@ class Soblazn(Card):
         
     def use(self, player):
         player.cards.remove(self)
+        return True
         
         
 class Scare(Card):
@@ -200,6 +210,46 @@ class Scare(Card):
     def use(self, player, target):
         bot.send_message(player.id, 'Карта, от которой вы отказались: "'+target.tradecard.name+'".')
         player.cards.remove(self)
+        return True
+        
+class Stayhere(Card):
+    
+    def __init__(self):
+        self.name='Мне и здесь неплохо'
+        
+    def use(self, player, game, target):
+        bot.send_message(game.id, player.name+' отказался от обмена местами с '+target.name+' с помощью карты "Мне и здесь неплохо"!')
+        return True
+    
+class Nothx(Card):
+    
+    def __init__(self):
+        self.name='Нет уж, спасибо!'
+        
+    def use(self, player, game, target):
+        bot.send_message(game.id, player.name+' отказался от обмена картами с '+target.name+' с помощью карты "Нет уж, спасибо!"!')
+        return True
+    
+class Miss(Card):
+    
+    def __init__(self):
+        self.name='Мимо!'
+        
+    def use(self, player, game):
+        return True
+    
+class Nofire(Card):
+    
+    def __init__(self):
+        self.name='Никакого шашлыка!'
+        
+    def use(self, player, target, game):
+        bot.send_message(game.id, player.name+' надел противогаз! Игроку '+target.name+' не удалось сжечь его.')
+        return True
+
+class Carantine(Card):
+    pass
+        
                          
                          
         
