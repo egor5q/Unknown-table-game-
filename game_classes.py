@@ -204,9 +204,10 @@ class Player:
         self.alive=True
         self.place=None
         self.active=False
-        self.nears=[]
         self.tradecard=None
         self.defence=False
+        self.attacked=False
+        self.target=None
         
     def turn(self, chat):
         kb=types.InlineKeyboardMarkup()
@@ -223,53 +224,122 @@ def inline(call):
     for ids in game.playerlist:
         if ids.id==call.from_user.id:
             user=ids
-    if 'usecard' in call.data:
+    if 'playcard' in call.data:
         for ids in user.cards:
-            kb.add(types.InlineKeyboardButton(text=ids.name, callback_data='info '+chat+' '+ids.code))
+            kb.add(types.InlineKeyboardButton(text=ids.name, callback_data='info '+str(chat.id)+' '+ids.code))
         
     if 'info' in call.data:
         x=call.data.split(' ')[2]
-        if x=='none':
-            text='Информация о карте отсутствует.'
-        if x=='unknown':
-            text=cards.Unknown.info
-        if x=='infection':
-            text=cards.Infection.info
-        if x=='flame':
-            text=cards.Flame.info
-        if x=='analysis':
-            text=cards.Analysis.info
-        if x=='axe':
-            text=cards.Axe.info
-        if x=='untruth':
-            text=cards.Untruth.info
-        if x=='viski':
-            text=cards.Viski.info
-        if x=='persistence':
-            text=cards.Persistence.info
-        if x=='around':
-            text=cards.Around.info
-        if x=='newplace_near':
-            text=cards.Newplace_near.info
-        if x=='newplace_far':
-            text=cards.Newplace_far.info
-        if x=='soblazn':
-            text=cards.Soblazn.info
-        if x=='scare':
-            text=cards.Scare.info
-        if x=='stayhere':
-            text=cards.Stayhere.info
-        if x=='nothx':
-            text=cards.Nothx.info
-        if x=='miss':
-            text=cards.Miss.info
-        if x=='nofire':
-            text=cards.Nofire.info
-    
-                  
-                  
-            
+        text='none'
+        text=codetoclass(x).info
+        kb.add(types.InlineKeyboardButton(text='⚡️Использовать карту', callback_data='usecard '+str(chat.id)+' '+x))
+        kb.add(types.InlineKeyboardButton(text='↩️Назад', callback_data='mainmenu '+str(chat.id)))
+        medit(text, call.message.chat.id, call.message.message_id)
         
+    if 'usecard' in call.data:
+        card=codetoclass(call.data.split(' ')[2])
+        if card.type=='action' or card.type=='barrier':
+            if user.active:
+                if card.targetable and user.target==None:
+                    if card.target_all:
+                        enemies=findallenemy(user, game)
+                    else:
+                        enemies=findnearenemy(user, game)
+                    if card.target_self:
+                        enemies.append(user)
+                    for ids in enemies:
+                        kb.add(types.InlineKeyboardButton(text=ids.name, callback_data='castcard '+str(chat.id)+' '+card.code+' '+str(ids.id)))
+                    kb.add(types.InlineKeyboardButton(text='Назад', callback_data='mainmenu'))
+                    medit('Выберите цель для карты "'+card.name+'":', call.message.chat.id, call.message.message_id)
+                else:
+                    enm=call.data.split(' ')[3]
+                    enemy=None
+                    for ids in chat.playerlist:
+                        if ids.id==int(enm):
+                            enemy=enm
+                    card.use(player=user, target=enemy, game=chat)
+            else:
+                bot.answer_callback_query(call.id, 'Сейчас не ваш ход!')
+                
+        elif card.type=='defence':
+            if user.active==False and user.attacked:
+                pass
+            else:
+                bot.answer_callback_query(call.id, 'Эту карту можно сыграть только в ответ на сыгранную на вас карту!')
+                
+        elif card.type=='infection' or card.type=='unknown':
+            bot.answer_callback_query(call.id, 'Эту карту нельзя использовать!')
+        
+
+def findallenemy(player,game):
+        nears=[]
+        for ids in game.players:
+            if ids.id!=player.id:
+                nears.append(ids)
+        return nears
+    
+       
+def findnearenemy(player,game):
+        x=player.number
+        near1=x+1
+        if near1>len(game.players):
+            near1=1
+        near2=x-1
+        if near2<1:
+            near2=len(game.players)
+        for ids in game.players:
+            if ids.place==near1:
+                near1=ids
+        for ids in game.players:
+            if ids.place==near2:
+                near2=ids
+        nears=[near1, near2]
+        return nears
+    
+    def allplayers(player,game):
+        nears=[]
+        for ids in game.players:
+            if ids.id!=player.id:
+                nears.append(ids)
+        return nears  
+        
+            
+def codetoclass(x):
+    if x=='unknown':
+        text=cards.Unknown
+    if x=='infection':
+        text=cards.Infection
+    if x=='flame':
+        text=cards.Flame
+    if x=='analysis':
+        text=cards.Analysis
+    if x=='axe':
+        text=cards.Axe
+    if x=='untruth':
+        text=cards.Untruth
+    if x=='viski':
+        text=cards.Viski
+    if x=='persistence':
+        text=cards.Persistence
+    if x=='around':
+        text=cards.Around
+    if x=='newplace_near':
+        text=cards.Newplace_near
+    if x=='newplace_far':
+        text=cards.Newplace_far
+    if x=='soblazn':
+        text=cards.Soblazn
+    if x=='scare':
+        text=cards.Scare
+    if x=='stayhere':
+        text=cards.Stayhere
+    if x=='nothx':
+        text=cards.Nothx
+    if x=='miss':
+        text=cards.Miss
+    if x=='nofire':
+        text=cards.Nofire
+    return text
 
 
 
