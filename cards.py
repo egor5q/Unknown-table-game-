@@ -157,7 +157,7 @@ class Viski(Card):
         self.info='*Виски*\n\nОт всего этого голова кругом идёт... Время выпить! Использовав, вы показываете все свои карты '+\
         'на руке всем игрокам.'
         
-    def use(self, player, game, target=None):
+    def use(self, player, target, game):
         text=''
         player.cards.remove(self)
         for ids in player.cards:
@@ -173,7 +173,7 @@ class Persistence(Card):   # Упорство
         self.code='persistence'
         self.info='*Упорство*\n\nИспользовав, вы смотрите 3 верхние карты колоды, берете одну на руку и сбрасываете остальные.'
         
-    def use(self, player, game, target=None):
+    def use(self, player, target, game):
         cards=[]
         for ids in game.deck:
             if ids.type!='panica':
@@ -196,7 +196,7 @@ class Around(Card):
         self.code='around'
         self.info='*Гляди по сторонам*\n\nИспользовав, вы меняете направление хода на противоположное.'
         
-    def use(self, player, game, target=None):
+    def use(self, player, target, game):
         if game.onclock:
             game.onclock=False
         else:
@@ -215,7 +215,7 @@ class Newplace_near(Card):
         self.info='*Меняемся местами!*\n\nУ меня нехорошее предчувствие, надо сваливать отсюда! Использовав, вы меняетесь местами с '+\
         'соседним игроком.'
         
-    def use(self, player, game, target):
+    def use(self, player, target, game):
         nearplayers=findnear(player, game)
         player.nears=nearplayers
         player.cards.remove(self)
@@ -229,7 +229,7 @@ class Newplace_far(Card):
         self.code='newplace_far'
         self.targetable=True
         
-    def use(self, player, game, target):
+    def use(self, player, target, game):
         nearplayers=allplayers(player,game)
         player.nears=nearplayers
         player.cards.remove(self)
@@ -245,7 +245,7 @@ class Soblazn(Card):
         self.code='soblazn'
         self.targetable=True
         
-    def use(self, player, game, target):
+    def use(self, player, target, game):
         player.cards.remove(self)
         return True
         
@@ -257,7 +257,7 @@ class Scare(Card):
         self.type='defence'
         self.code='scare'
         
-    def use(self, player, target, game=None):
+    def use(self, player, target, game):
         bot.send_message(player.id, 'Карта, от которой вы отказались: "'+target.tradecard.name+'".')
         player.cards.remove(self)
         return True
@@ -269,7 +269,7 @@ class Stayhere(Card):
         self.type='defence'
         self.code='stayhere'
         
-    def use(self, player, game, target):
+    def use(self, player, target, game):
         bot.send_message(game.id, player.name+' отказался от обмена местами с '+target.name+' с помощью карты "Мне и здесь неплохо"!')
         return True
     
@@ -280,7 +280,7 @@ class Nothx(Card):
         self.type='defence'
         self.code='nothx'
         
-    def use(self, player, game, target):
+    def use(self, player, target, game):
         bot.send_message(game.id, player.name+' отказался от обмена картами с '+target.name+' с помощью карты "Нет уж, спасибо!"!')
         return True
     
@@ -291,7 +291,7 @@ class Miss(Card):
         self.type='defence'
         self.code='miss'
         
-    def use(self, player, game, target=None):
+    def use(self, player, target, game):
         return True
     
 class Nofire(Card):
