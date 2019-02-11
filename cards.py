@@ -7,6 +7,7 @@ class Card:
         self.dropable=True
         self.name=None
         self.code='none'
+        self.info='Информация отсутствует.'
 
     def use(self, player, target=None, game=None):
         return False
@@ -42,6 +43,7 @@ class Unknown(Card):
         self.dropable=False
         self.name='Нечто'
         self.code='unknown'
+        self.info='*Нечто*\n\nВы - нечто! Ваша цель - сделать так, чтобы все живые игроки стали зараженными.'
     
         
 class Infection(Card):
@@ -50,6 +52,9 @@ class Infection(Card):
         self.type='infection'
         self.name='Заражение'
         self.code='infection'
+        self.info='*Заражение*\n\n Если вы получили её от другого игрока - этот игрок Нечто (потому что только Нечто может '+\
+        'отдавать карты заражения другим игрокам), а вы теперь зараженный! Если же вы взяли ее из колоды - все в порядке, но будет '+\
+        'нехорошо, если другой игрок застанет вас с этой картой на руках...'
             
         
         
@@ -59,6 +64,8 @@ class Flame(Card):
         self.name='Огнемёт'
         self.type='action'
         self.code='flame'
+        self.info='*Огнемёт*\n\nС помощью этой штуки вы можете сжечь любого соседнего игрока - и если у него нет карты "Никакого шашлыка!", '+\
+        'то он выбывает из игры.'
     
     def use(self, player, target=None, game=None):
         nears=findnear(player, game)
@@ -73,6 +80,7 @@ class Analysis(Card):
         self.name='Анализ'
         self.type='action'
         self.code='analysis'
+        self.info='*Анализ*\n\nЭта карта позволит вам посмотреть ВСЕ карты на руке соседнего игрока.'
     
     def use(self, player, target=None, game=None):
         nears=findnear(player, game)
@@ -91,6 +99,7 @@ class Axe(Card):
         self.name='Топор'
         self.type='action'
         self.code='axe'
+        self.info='*Топор*\n\nОТКРЫВАЙ, ЭТО ДЖОННИ! Сломайте любую соседнюю дверь или снимите карантин с себя или соседнего игрока.'
         
     def use(self, player, target=None, game=None):
         if target==None:
@@ -120,6 +129,7 @@ class Untruth(Card):
         self.name='Подозрение'
         self.type='action'
         self.code='untruth'
+        self.info='*Недоверие*\n\nПосмотрите случайную карту на руке соседнего игрока.'
         
     def use(self, player, target, game=None):
         cards=[]
@@ -136,6 +146,8 @@ class Viski(Card):
         self.name='Виски'
         self.type='action'
         self.code='viski'
+        self.info='*Виски*\n\nОт всего этого голова кругом идёт... Время выпить! Использовав, вы показываете все свои карты '+\
+        'на руке всем игрокам.'
         
     def use(self, player, game):
         text=''
@@ -151,6 +163,7 @@ class Persistence(Card):   # Упорство
         self.name='Упорство'
         self.type='action'
         self.code='persistence'
+        self.info='*Упорство*\n\nИспользовав, вы смотрите 3 верхние карты колоды, берете одну на руку и сбрасываете остальные.'
         
     def use(self, player, game):
         cards=[]
@@ -173,6 +186,7 @@ class Around(Card):
         self.name='Гляди по сторонам'
         self.type='action'
         self.code='around'
+        self.info='*Гляди по сторонам*\n\nИспользовав, вы меняете направление хода на противоположное.'
         
     def use(self, player, game):
         if game.onclock:
@@ -189,6 +203,8 @@ class Newplace_near(Card):
         self.name='Меняемся местами!'
         self.type='action'
         self.code='newplace_near'
+        self.info='*Меняемся местами!*\n\nУ меня нехорошее предчувствие, надо сваливать отсюда! Использовав, вы меняетесь местами с '+\
+        'соседним игроком.'
         
     def use(self, player, game):
         nearplayers=findnear(player, game)
