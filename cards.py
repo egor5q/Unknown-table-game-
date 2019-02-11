@@ -57,8 +57,11 @@ class Flame(Card):
         self.type='action'
     
     def use(self, player, target=None, game=None):
-        target.alive=False
-        return True
+        nears=findnear(player, game)
+        if target in nears and target.defence==False:
+            target.alive=False
+            return True
+        return False
         
 class Analysis(Card):
     
@@ -67,12 +70,15 @@ class Analysis(Card):
         self.type='action'
     
     def use(self, player, target=None, game=None):
-        text=''
-        for ids in target.cards:
-            text+=ids.name+'\n'
-        bot.send_message(player.id, 'Карты в руке игрока '+target.name+':\n\n'+text)
-        player.cards.remove(self)
-        return True
+        nears=findnear(player, game)
+        if target in nears:
+            text=''
+            for ids in target.cards:
+                text+=ids.name+'\n'
+            bot.send_message(player.id, 'Карты в руке игрока '+target.name+':\n\n'+text)
+            player.cards.remove(self)
+            return True
+        return False
         
 class Axe(Card):
     
