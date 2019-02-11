@@ -6,6 +6,7 @@ class Card:
         self.type=None    # infection/action/defence/barrier/panica/unknown
         self.dropable=True
         self.name=None
+        self.code='none'
 
     def use(self, player, target=None, game=None):
         return False
@@ -40,6 +41,7 @@ class Unknown(Card):
         self.type='unknown'
         self.dropable=False
         self.name='Нечто'
+        self.code='unknown'
     
         
 class Infection(Card):
@@ -47,6 +49,7 @@ class Infection(Card):
     def __init__(self):
         self.type='infection'
         self.name='Заражение'
+        self.code='infection'
             
         
         
@@ -55,6 +58,7 @@ class Flame(Card):
     def __init__(self):
         self.name='Огнемёт'
         self.type='action'
+        self.code='flame'
     
     def use(self, player, target=None, game=None):
         nears=findnear(player, game)
@@ -68,6 +72,7 @@ class Analysis(Card):
     def __init__(self):
         self.name='Анализ'
         self.type='action'
+        self.code='analysis'
     
     def use(self, player, target=None, game=None):
         nears=findnear(player, game)
@@ -85,6 +90,7 @@ class Axe(Card):
     def __init__(self):
         self.name='Топор'
         self.type='action'
+        self.code='axe'
         
     def use(self, player, target=None, game=None):
         if target==None:
@@ -113,6 +119,7 @@ class Untruth(Card):
     def __init__(self):
         self.name='Подозрение'
         self.type='action'
+        self.code='untruth'
         
     def use(self, player, target, game=None):
         cards=[]
@@ -128,6 +135,7 @@ class Viski(Card):
     def __init__(self):
         self.name='Виски'
         self.type='action'
+        self.code='viski'
         
     def use(self, player, game):
         text=''
@@ -142,6 +150,7 @@ class Persistence(Card):   # Упорство
     def __init__(self):
         self.name='Упорство'
         self.type='action'
+        self.code='persistence'
         
     def use(self, player, game):
         cards=[]
@@ -163,6 +172,7 @@ class Around(Card):
     def __init__(self):
         self.name='Гляди по сторонам'
         self.type='action'
+        self.code='around'
         
     def use(self, player, game):
         if game.onclock:
@@ -178,6 +188,7 @@ class Newplace_near(Card):
     def __init__(self):
         self.name='Меняемся местами!'
         self.type='action'
+        self.code='newplace_near'
         
     def use(self, player, game):
         nearplayers=findnear(player, game)
@@ -190,6 +201,7 @@ class Newplace_far(Card):
     def __init__(self):
         self.name='Сматывай удочки!'
         self.type='action'
+        self.code='newplace_far'
         
     def use(self, player, game):
         nearplayers=allplayers(player,game)
@@ -204,6 +216,7 @@ class Soblazn(Card):
     def __init__(self):
         self.name='Соблазн'
         self.type='action'
+        self.code='soblazn'
         
     def use(self, player):
         player.cards.remove(self)
@@ -215,6 +228,7 @@ class Scare(Card):
     def __init__(self):
         self.name='Страх'
         self.type='defence'
+        self.code='scare'
         
     def use(self, player, target):
         bot.send_message(player.id, 'Карта, от которой вы отказались: "'+target.tradecard.name+'".')
@@ -226,6 +240,7 @@ class Stayhere(Card):
     def __init__(self):
         self.name='Мне и здесь неплохо'
         self.type='defence'
+        self.code='stayhere'
         
     def use(self, player, game, target):
         bot.send_message(game.id, player.name+' отказался от обмена местами с '+target.name+' с помощью карты "Мне и здесь неплохо"!')
@@ -236,6 +251,7 @@ class Nothx(Card):
     def __init__(self):
         self.name='Нет уж, спасибо!'
         self.type='defence'
+        self.code='nothx'
         
     def use(self, player, game, target):
         bot.send_message(game.id, player.name+' отказался от обмена картами с '+target.name+' с помощью карты "Нет уж, спасибо!"!')
@@ -246,6 +262,7 @@ class Miss(Card):
     def __init__(self):
         self.name='Мимо!'
         self.type='defence'
+        self.code='miss'
         
     def use(self, player, game):
         return True
@@ -255,6 +272,7 @@ class Nofire(Card):
     def __init__(self):
         self.name='Никакого шашлыка!'
         self.type='defence'
+        self.code='nofire'
         
     def use(self, player, target, game):
         bot.send_message(game.id, player.name+' надел противогаз! Игроку '+target.name+' не удалось сжечь его.')
