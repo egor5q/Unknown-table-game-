@@ -155,7 +155,7 @@ class Game:
         self.gametimer=threading.Timer(8, nextplayer, args=[self])
         self.gametimer.start()
         
-        self.currentplayer.turn()
+        self.currentplayer.turn(self.id)
         
         
     def nextplayer(self):
@@ -173,7 +173,7 @@ class Game:
         curplayer.active=True
         self.currentplayer.active=False
         self.currentplayer=curplayer
-        self.currentplayer.turn()
+        self.currentplayer.turn(self.id)
     
     
     def m_update(self):   # Обновление списка игроков
@@ -204,13 +204,24 @@ class Player:
         self.tradecard=None
         self.defence=False
         
-    def turn(self):
+    def turn(self, chat):
         kb=types.InlineKeyboardMarkup()
-        kb.add(types.InlineKeyboardButton(text='Разыграть карту',callback_data='playcard'),types.InlineKeyboardButton(text='Окончить ход',callback_data='endturn'))
+        kb.add(types.InlineKeyboardButton(text='Разыграть карту',callback_data='playcard '+str(chat)),types.InlineKeyboardButton(text='Окончить ход',callback_data='endturn'))
         bot.send_message(self.id, 'Ваша очередь сделать ход.',reply_markup=kb)
                          
 
-
+@bot.callback_query_handler(func=lambda call:True)
+def inline(call): 
+    kb=types.InlineKeyboardMarkup()
+    game=games[int(call.data.split(' ')[1])]
+    for ids in game.playerlist:
+        if ids.id==call.from_user.id:
+            user=ids
+    if call.data=='usecard':
+        for ids in user.cards:
+            kb.add(types.InlineKeyboardButton(text=ids.name, callback_data='info '+chat+' '+ids.code))
+            
+        
 
 
 
