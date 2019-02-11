@@ -152,14 +152,28 @@ class Game:
             players.append(self.playerlist[ids])
         self.currentplayer=random.choice(players)
         self.currentplayer.active=True
-        self.gametimer=threading.Timer(80, nextplayer, args=[self])
+        self.gametimer=threading.Timer(8, nextplayer, args=[self])
         self.gametimer.start()
         
         self.currentplayer.turn()
         
         
     def nextplayer(self):
-        pass
+        if self.onclock==True:
+            np=self.currentplayer.number+1
+            if np>len(self.playerlist):
+                np=1
+        else:
+            np=self.currentplayer.number-1
+            if np<1
+                np=len(self.playerlist)
+        for ids in self.playerlist:
+            if ids.number==np:
+                curplayer=ids
+        curplayer.active=True
+        self.currentplayer.active=False
+        self.currentplayer=curplayer
+        self.currentplayer.turn()
     
     
     def m_update(self):   # Обновление списка игроков
@@ -185,7 +199,7 @@ class Player:
         self.cards=[]        #все карты в руке игрока
         self.alive=True
         self.place=None
-        self.active=False,
+        self.active=False
         self.nears=[]
         self.tradecard=None
         self.defence=False
