@@ -7,6 +7,7 @@ games=lobbys.games
 allcards=['unknown', 'infection', 'flame', 'analysis', 'axe', 'untruth', 'viski', 'persistence', 'around', 'newplace_near',
          'newplace_far', 'soblazn', 'scare', 'stayhere', 'nothx', 'miss', 'nofire']
 
+
 class Game:
     
     def __init__(self,m):
@@ -127,14 +128,17 @@ class Game:
         self.currentplayer=None
         self.doors=[]
         self.onclock=True  # Ход по часовой стрелке или против
-        
+    
+
     def createplayer(self,user):
         self.playerlist.update({user.id:Player(user)})
         
     def startgame(self):
         self.started=True
         preparegame(self)
-        
+ 
+
+
     def preparegame(self):
         #Тут будет раздача карт игрокам и перемешивание колоды
         place=1
@@ -156,8 +160,8 @@ class Game:
         self.gametimer.start()
         
         self.currentplayer.turn(self.id)
-        
-        
+  
+
     def nextplayer(self):
         if self.onclock==True:
             np=self.currentplayer.number+1
@@ -175,7 +179,7 @@ class Game:
         self.currentplayer=curplayer
         self.currentplayer.turn(self.id)
     
-    
+
     def m_update(self):   # Обновление списка игроков
         text='Список игроков:\n\n'
         for ids in self.playerlist:
@@ -187,7 +191,7 @@ class Game:
             bot.send_message(self.id,'Игра была отменена!')
             del games[self.id]
         
-            
+
          
 class Player:
     def __init__(self,user):
@@ -210,6 +214,8 @@ class Player:
         bot.send_message(self.id, 'Ваша очередь сделать ход.',reply_markup=kb)
                          
 
+         
+         
 @bot.callback_query_handler(func=lambda call:True)
 def inline(call): 
     kb=types.InlineKeyboardMarkup()
@@ -217,9 +223,51 @@ def inline(call):
     for ids in game.playerlist:
         if ids.id==call.from_user.id:
             user=ids
-    if call.data=='usecard':
+    if 'usecard' in call.data:
         for ids in user.cards:
             kb.add(types.InlineKeyboardButton(text=ids.name, callback_data='info '+chat+' '+ids.code))
+        
+    if 'info' in call.data:
+        x=call.data.split(' ')[2]
+        if x=='none':
+            text='Информация о карте отсутствует.'
+        if x=='unknown':
+            text=cards.Unknown.info
+        if x=='infection':
+            text=cards.Infection.info
+        if x=='flame':
+            text=cards.Flame.info
+        if x=='analysis':
+            text=cards.Analysis.info
+        if x=='axe':
+            text=cards.Axe.info
+        if x=='untruth':
+            text=cards.Untruth.info
+        if x=='viski':
+            text=cards.Viski.info
+        if x=='persistence':
+            text=cards.Persistence.info
+        if x=='around':
+            text=cards.Around.info
+        if x=='newplace_near':
+            text=cards.Newplace_near.info
+        if x=='newplace_far':
+            text=cards.Newplace_far.info
+        if x=='soblazn':
+            text=cards.Soblazn.info
+        if x=='scare':
+            text=cards.Scare.info
+        if x=='stayhere':
+            text=cards.Stayhere.info
+        if x=='nothx':
+            text=cards.Nothx.info
+        if x=='miss':
+            text=cards.Miss.info
+        if x=='nofire':
+            text=cards.Nofire.info
+    
+                  
+                  
             
         
 
