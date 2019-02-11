@@ -231,8 +231,10 @@ def inline(call):
     if 'info' in call.data:
         x=call.data.split(' ')[2]
         text='none'
-        text=codetoclass(x).info
-        kb.add(types.InlineKeyboardButton(text='⚡️Использовать карту', callback_data='usecard '+str(chat.id)+' '+x))
+        card=codetoclass(x)
+        text=card.info
+        if card.type!='unknown' and card.type!='infection':
+            kb.add(types.InlineKeyboardButton(text='⚡️Использовать карту', callback_data='usecard '+str(chat.id)+' '+x))
         kb.add(types.InlineKeyboardButton(text='↩️Назад', callback_data='mainmenu '+str(chat.id)))
         medit(text, call.message.chat.id, call.message.message_id)
         
@@ -248,7 +250,7 @@ def inline(call):
                     if card.target_self:
                         enemies.append(user)
                     for ids in enemies:
-                        kb.add(types.InlineKeyboardButton(text=ids.name, callback_data='castcard '+str(chat.id)+' '+card.code+' '+str(ids.id)))
+                        kb.add(types.InlineKeyboardButton(text=ids.name, callback_data='usecard '+str(chat.id)+' '+card.code+' '+str(ids.id)))
                     kb.add(types.InlineKeyboardButton(text='Назад', callback_data='mainmenu'))
                     medit('Выберите цель для карты "'+card.name+'":', call.message.chat.id, call.message.message_id)
                 else:
@@ -266,9 +268,6 @@ def inline(call):
                 pass
             else:
                 bot.answer_callback_query(call.id, 'Эту карту можно сыграть только в ответ на сыгранную на вас карту!')
-                
-        elif card.type=='infection' or card.type=='unknown':
-            bot.answer_callback_query(call.id, 'Эту карту нельзя использовать!')
         
 
 def findallenemy(player,game):
