@@ -8,6 +8,9 @@ class Card:
         self.name=None
         self.code='none'
         self.info='Информация отсутствует.'
+        self.targetable=False
+        self.target_all=False
+        self.target_self=False
 
     def use(self, player, target=None, game=None):
         return False
@@ -64,10 +67,11 @@ class Flame(Card):
         self.name='Огнемёт'
         self.type='action'
         self.code='flame'
+        self.targetable=True
         self.info='*Огнемёт*\n\nС помощью этой штуки вы можете сжечь любого соседнего игрока - и если у него нет карты "Никакого шашлыка!", '+\
         'то он выбывает из игры.'
     
-    def use(self, player, target=None, game=None):
+    def use(self, player, target, game):
         nears=findnear(player, game)
         if target in nears and target.defence==False:
             target.alive=False
@@ -80,9 +84,10 @@ class Analysis(Card):
         self.name='Анализ'
         self.type='action'
         self.code='analysis'
+        self.targetable=True
         self.info='*Анализ*\n\nЭта карта позволит вам посмотреть ВСЕ карты на руке соседнего игрока.'
     
-    def use(self, player, target=None, game=None):
+    def use(self, player, target, game):
         nears=findnear(player, game)
         if target in nears:
             text=''
@@ -99,9 +104,11 @@ class Axe(Card):
         self.name='Топор'
         self.type='action'
         self.code='axe'
+        self.targetable=True
+        self.target_self=True
         self.info='*Топор*\n\nОТКРЫВАЙ, ЭТО ДЖОННИ! Сломайте любую соседнюю дверь или снимите карантин с себя или соседнего игрока.'
         
-    def use(self, player, target=None, game=None):
+    def use(self, player, target, game):
         if target==None:
             player.effects.remove('carantine')
             text=player.name+' снимает с себя карантин!'
@@ -129,6 +136,7 @@ class Untruth(Card):
         self.name='Подозрение'
         self.type='action'
         self.code='untruth'
+        self.targetable=True
         self.info='*Недоверие*\n\nПосмотрите случайную карту на руке соседнего игрока.'
         
     def use(self, player, target, game=None):
@@ -149,7 +157,7 @@ class Viski(Card):
         self.info='*Виски*\n\nОт всего этого голова кругом идёт... Время выпить! Использовав, вы показываете все свои карты '+\
         'на руке всем игрокам.'
         
-    def use(self, player, game):
+    def use(self, player, game, target=None):
         text=''
         player.cards.remove(self)
         for ids in player.cards:
@@ -165,7 +173,7 @@ class Persistence(Card):   # Упорство
         self.code='persistence'
         self.info='*Упорство*\n\nИспользовав, вы смотрите 3 верхние карты колоды, берете одну на руку и сбрасываете остальные.'
         
-    def use(self, player, game):
+    def use(self, player, game, target=None):
         cards=[]
         for ids in game.deck:
             if ids.type!='panica':
@@ -188,7 +196,7 @@ class Around(Card):
         self.code='around'
         self.info='*Гляди по сторонам*\n\nИспользовав, вы меняете направление хода на противоположное.'
         
-    def use(self, player, game):
+    def use(self, player, game, target=None):
         if game.onclock:
             game.onclock=False
         else:
@@ -203,10 +211,11 @@ class Newplace_near(Card):
         self.name='Меняемся местами!'
         self.type='action'
         self.code='newplace_near'
+        self.targetable=True
         self.info='*Меняемся местами!*\n\nУ меня нехорошее предчувствие, надо сваливать отсюда! Использовав, вы меняетесь местами с '+\
         'соседним игроком.'
         
-    def use(self, player, game):
+    def use(self, player, game, target):
         nearplayers=findnear(player, game)
         player.nears=nearplayers
         player.cards.remove(self)
@@ -218,8 +227,9 @@ class Newplace_far(Card):
         self.name='Сматывай удочки!'
         self.type='action'
         self.code='newplace_far'
+        self.targetable=True
         
-    def use(self, player, game):
+    def use(self, player, game, target):
         nearplayers=allplayers(player,game)
         player.nears=nearplayers
         player.cards.remove(self)
@@ -233,8 +243,9 @@ class Soblazn(Card):
         self.name='Соблазн'
         self.type='action'
         self.code='soblazn'
+        self.targetable=True
         
-    def use(self, player):
+    def use(self, player, game, target):
         player.cards.remove(self)
         return True
         
@@ -246,7 +257,7 @@ class Scare(Card):
         self.type='defence'
         self.code='scare'
         
-    def use(self, player, target):
+    def use(self, player, target, game=None):
         bot.send_message(player.id, 'Карта, от которой вы отказались: "'+target.tradecard.name+'".')
         player.cards.remove(self)
         return True
@@ -280,7 +291,7 @@ class Miss(Card):
         self.type='defence'
         self.code='miss'
         
-    def use(self, player, game):
+    def use(self, player, game, target=None):
         return True
     
 class Nofire(Card):
