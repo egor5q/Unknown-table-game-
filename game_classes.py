@@ -213,6 +213,9 @@ class Player:
         kb=types.InlineKeyboardMarkup()
         kb.add(types.InlineKeyboardButton(text='Разыграть карту',callback_data='playcard '+str(chat)),types.InlineKeyboardButton(text='Окончить ход',callback_data='endturn'))
         bot.send_message(self.id, 'Ваша очередь сделать ход.',reply_markup=kb)
+        
+    def defmenu(card):
+        pass     # Тут юзеру будет предлагаться сыграть карту защиты в ответ на сыгранную на него карту действия
                          
 
          
@@ -259,7 +262,9 @@ def inline(call):
                     for ids in chat.playerlist:
                         if ids.id==int(enm):
                             enemy=enm
-                    card.use(player=user, target=enemy, game=chat)
+                    t=threading.Timer(10, card.use, args=[user, enemy, chat])
+                    t.start()
+                    enemy.defmenu(card)
             else:
                 bot.answer_callback_query(call.id, 'Сейчас не ваш ход!')
                 
@@ -267,8 +272,8 @@ def inline(call):
             if user.active==False and user.attacked:
                 pass
             else:
-                bot.answer_callback_query(call.id, 'Эту карту можно сыграть только в ответ на сыгранную на вас карту!')
-        
+                bot.answer_callback_query(call.id, 'Эту карту можно сыграть только в ответ на сыгранную на вас карту!')          
+                
 
 def findallenemy(player,game):
         nears=[]
