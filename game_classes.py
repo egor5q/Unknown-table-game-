@@ -188,6 +188,7 @@ class Player:
         self.active=False,
         self.nears=[]
         self.tradecard=None
+        self.defence=False
         
     def turn(self):
         kb=types.InlineKeyboardMarkup()
