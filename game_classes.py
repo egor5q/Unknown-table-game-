@@ -235,7 +235,7 @@ class Player:
              # Тут юзеру будет предлагаться сыграть карту защиты в ответ на сыгранную на него карту действия
         i=0
         for ids in self.cards:
-            if ids in card.cancancelled:
+            if ids.code in card.cancancelled:
                 kb.add(types.InlineKeyboardButton(text=ids.name, callback_data='defence '+str(self.chatid)+' '+ids.code))
                 i+=1
         if i>0:
