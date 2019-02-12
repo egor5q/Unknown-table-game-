@@ -197,7 +197,7 @@ class Game:
         text='Набор участников для экспедиции открыт! Жмите "Присоединиться" для вступления в игру.\nСписок игроков:\n\n'
         for ids in self.playerlist:
             text+=self.playerlist[ids].name+'\n'
-        tools.medit(text, self.message.chat.id, self.message.message_id, reply_markup=kb)
+        medit(text, self.message.chat.id, self.message.message_id, reply_markup=kb)
         
     def cancelgame(self):
         if self.canceltimer!=None:
