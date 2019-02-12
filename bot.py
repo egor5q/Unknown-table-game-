@@ -84,7 +84,9 @@ def inline(call):
         if 'info' in call.data:
             x=call.data.split(' ')[2]
             text='none'
-            card=codetoclass(x)
+            for ids in user.cards:
+                if ids.code==x:
+                    card=ids
             text=card.info
             if card.type!='unknown' and card.type!='infection':
                 kb.add(types.InlineKeyboardButton(text='⚡️Использовать карту', callback_data='usecard '+str(chat.id)+' '+x))
@@ -92,7 +94,10 @@ def inline(call):
             medit(text, call.message.chat.id, call.message.message_id)
             
         if 'usecard' in call.data:
-            card=codetoclass(call.data.split(' ')[2])
+            x=call.data.split(' ')[2]
+            for ids in user.cards:
+                if ids.code==x:
+                    card=ids
             if card.type=='action' or card.type=='barrier':
                 if user.active:
                     if card.targetable and user.target==None:
