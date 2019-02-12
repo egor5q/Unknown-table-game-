@@ -81,7 +81,7 @@ class Flame(Card):
         'то он выбывает из игры.'
     
     def use(self, player, target, game):
-        nears=findnear(player, game)
+        nears=self.findnear(player, game)
         if target in nears and target.defence==False:
             target.alive=False
             bot.send_message(game.id, player.name+' сжигает '+target.name+' заживо!')
@@ -101,7 +101,7 @@ class Analysis(Card):
         self.info='*Анализ*\n\nЭта карта позволит вам посмотреть ВСЕ карты на руке соседнего игрока.'
     
     def use(self, player, target, game):
-        nears=findnear(player, game)
+        nears=self.findnear(player, game)
         if target in nears:
             text=''
             for ids in target.cards:
@@ -241,7 +241,7 @@ class Newplace_near(Card):
         'соседним игроком.'
         
     def use(self, player, target, game):
-        nearplayers=findnear(player, game)
+        nearplayers=self.findnear(player, game)
         player.nears=nearplayers
         player.cards.remove(self)
         return True
@@ -257,7 +257,7 @@ class Newplace_far(Card):
         self.targetable=True
         
     def use(self, player, target, game):
-        nearplayers=allplayers(player,game)
+        nearplayers=self.allplayers(player,game)
         player.cards.remove(self)
         return True
         
