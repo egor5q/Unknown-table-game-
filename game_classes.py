@@ -142,7 +142,7 @@ class Game:
         
     def startgame(self):
         self.started=True
-        preparegame(self)
+        self.preparegame()
  
 
 
