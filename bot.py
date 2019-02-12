@@ -71,6 +71,7 @@ def inline(call):
         for ids in game.playerlist:
             if game.playerlist[ids].id==call.from_user.id:
                 user=game.playerlist[ids]
+        chat=game
         if 'playcard' in call.data:
             for ids in user.cards:
                 print(ids)
