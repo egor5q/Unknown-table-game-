@@ -104,6 +104,7 @@ def inline(call):
                   if ids.code==x:
                       card=ids
               if card!=None:
+                  print(card)
                   if card.type=='action' or card.type=='barrier':
                       if user.active:
                           if card.targetable and user.target==None:
