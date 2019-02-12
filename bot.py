@@ -74,7 +74,7 @@ def inline(call):
         if 'playcard' in call.data:
             for ids in user.cards:
                 print(ids)
-                kb.add(types.InlineKeyboardButton(text=ids.name, callback_data='info '+str(chat.id)+' '+ids.code))
+                kb.add(types.InlineKeyboardButton(text=user.cards.ids.name, callback_data='info '+str(chat.id)+' '+ids.code))
             medit('Выберите карту:', call.message.chat.id, call.message.message_id, reply_markup=kb)
             
         if 'info' in call.data:
