@@ -16,9 +16,9 @@ token = os.environ['TELEGRAM_TOKEN']
 bot = telebot.TeleBot(token)
 
 
-client=MongoClient(os.environ['database'])
-db=client.unknown
-users=db.users
+#client=MongoClient(os.environ['database'])
+#db=client.unknown
+#users=db.users
 
 @bot.message_handler(commands=['creategame'])
 def creategame(m):
