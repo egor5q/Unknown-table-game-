@@ -11,6 +11,7 @@ import game_classes
 import lobbys
 import cards
 from tools import medit
+import traceback
 games=lobbys.games
 
 from game_classes import codetoclass, findallenemy, findnearenemy
