@@ -128,10 +128,11 @@ def inline(call):
                               enemy=None
                               if enm!=None:
                                   for ids in chat.playerlist:
-                                      if ids.id==int(enm):
-                                          enemy=enm
+                                      if chat.playerlist[ids].id==int(enm):
+                                          enemy=chat.playerlist[ids]
                               else:
                                   enemy=user
+                              user.target=enemy
                               if card.cancancelled!=[]:
                                   t=threading.Timer(10, card.use, args=[user, enemy, chat])
                                   t.start()
