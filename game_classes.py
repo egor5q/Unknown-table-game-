@@ -250,9 +250,9 @@ class Player:
 
 def findallenemy(player,game):
         nears=[]
-        for ids in game.players:
-            if game.players[ids].id!=player.id:
-                nears.append(game.players[ids])
+        for ids in game.playerlist:
+            if game.playerlist[ids].id!=player.id:
+                nears.append(game.playerlist[ids])
         return nears
     
        
@@ -266,10 +266,10 @@ def findnearenemy(player,game):
             near2=len(game.playerlist)
         for ids in game.playerlist:
             if game.playerlist[ids].number==near1:
-                near1=game.players[ids]
+                near1=game.playerlist[ids]
         for ids in game.playerlist:
             if game.playerlist[ids].number==near2:
-                near2=game.players[ids]
+                near2=game.playerlist[ids]
         nears=[near1, near2]
         return nears 
         
