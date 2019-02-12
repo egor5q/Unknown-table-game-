@@ -143,6 +143,7 @@ class Game:
         #Тут будет раздача карт игрокам и перемешивание колоды
         place=1
         for ids in self.playerlist:
+            ids.chatid=self.id
             self.playerlist[ids]['place']=place
             i=0
             while i<self.handcards:
@@ -208,14 +209,28 @@ class Player:
         self.defence=False
         self.attacked=False
         self.target=None
+        self.chatid=None
+        self.messages=[]
         
     def turn(self, chat):
         kb=types.InlineKeyboardMarkup()
         kb.add(types.InlineKeyboardButton(text='Разыграть карту',callback_data='playcard '+str(chat)),types.InlineKeyboardButton(text='Окончить ход',callback_data='endturn'))
-        bot.send_message(self.id, 'Ваша очередь сделать ход.',reply_markup=kb)
+        self.messages.append(bot.send_message(self.id, 'Ваша очередь сделать ход.',reply_markup=kb))
         
-    def defmenu(card):
-        pass     # Тут юзеру будет предлагаться сыграть карту защиты в ответ на сыгранную на него карту действия
+    def defmenu(self, card):
+        kb=types.InlineKeyboardMarkup()
+             # Тут юзеру будет предлагаться сыграть карту защиты в ответ на сыгранную на него карту действия
+        i=0
+        for ids in self.cards:
+            if ids in card.cancancelled:
+                kb.add(types.InlineKeyboardButton(text=ids.name, callback_data='defence '+str(self.chatid)+' '+ids.code))
+                i+=1
+        if i>0:
+            text='На вас была разыграна карта "'+card.name+'"! Если хотите, выберите одну из нижеперечисленных карт для защиты. '+\
+            'У вас есть 10 секунд.'
+        else:
+            text='На вас была разыграна карта "'+card.name+'", но у вас нет подходящих карт для защиты.'
+        self.messages.append(bot.send_message(self.id, text, reply_markup=kb))
                          
 
          
