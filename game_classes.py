@@ -25,103 +25,103 @@ class Game:
                 i=0
                 c=1
                 while i<c:
-                    deck.append(cards.Unknown)
+                    deck.append(cards.Unknown())
                     i+=1
             if ids=='infection':
                 i=0
                 c=8
                 while i<c:
-                    deck.append(cards.Infection)
+                    deck.append(cards.Infection())
                     i+=1
             if ids=='flame':
                 i=0
                 c=3
                 while i<c:
-                    deck.append(cards.Flame)
+                    deck.append(cards.Flame())
                     i+=1
             if ids=='analysis':
                 i=0
                 c=1
                 while i<c:
-                    deck.append(cards.Analysis)
+                    deck.append(cards.Analysis())
                     i+=1
             if ids=='axe':
                 i=0
                 c=2
                 while i<c:
-                    deck.append(cards.Axe)
+                    deck.append(cards.Axe())
                     i+=1
             if ids=='untruth':
                 i=0
                 c=2
                 while i<c:
-                    deck.append(cards.Untruth)
+                    deck.append(cards.Untruth())
                     i+=1
             if ids=='viski':
                 i=0
                 c=1
                 while i<c:
-                    deck.append(cards.Viski)
+                    deck.append(cards.Viski())
                     i+=1
             if ids=='persistence':
                 i=0
                 c=2
                 while i<c:
-                    deck.append(cards.Persistence)
+                    deck.append(cards.Persistence())
                     i+=1
             if ids=='around':
                 i=0
                 c=0
                 while i<c:
-                    deck.append(cards.Around)
+                    deck.append(cards.Around())
                     i+=1
             if ids=='newplace_near':
                 i=0
                 c=2
                 while i<c:
-                    deck.append(cards.Newplace_near)
+                    deck.append(cards.Newplace_near())
                     i+=1
             if ids=='newplace_far':
                 i=0
                 c=2
                 while i<c:
-                    deck.append(cards.Newplace_far)
+                    deck.append(cards.Newplace_far())
                     i+=1
             if ids=='soblazn':
                 i=0
                 c=1
                 while i<c:
-                    deck.append(cards.Soblazn)
+                    deck.append(cards.Soblazn())
                     i+=1
             if ids=='scare':
                 i=0
                 c=1
                 while i<c:
-                    deck.append(cards.Scare)
+                    deck.append(cards.Scare())
                     i+=1
             if ids=='stayhere':
                 i=0
                 c=1
                 while i<c:
-                    deck.append(cards.Stayhere)
+                    deck.append(cards.Stayhere())
                     i+=1
             if ids=='nothx':
                 i=0
                 c=2
                 while i<c:
-                    deck.append(cards.Nothx)
+                    deck.append(cards.Nothx())
                     i+=1
             if ids=='miss':
                 i=0
                 c=1
                 while i<c:
-                    deck.append(cards.Miss)
+                    deck.append(cards.Miss())
                     i+=1
             if ids=='nofire':
                 i=0
                 c=1
                 while i<c:
-                    deck.append(cards.Nofire)
+                    deck.append(cards.Nofire())
                     i+=1
         print(deck)
             
