@@ -173,23 +173,27 @@ class Game:
   
 
     def nextplayer(self):
-        if self.onclock==True:
-            np=self.currentplayer.number+1
-            if np>len(self.playerlist):
-                np=1
-        else:
-            np=self.currentplayer.number-1
-            if np<1:
-                np=len(self.playerlist)
-        for ids in self.playerlist:
-            if self.playerlist[ids].number==np:
-                curplayer=self.playerlist[ids]
-        curplayer.active=True
-        self.currentplayer.active=False
-        self.currentplayer=curplayer
-        self.currentplayer.turn(self.id)
-        self.gametimer=threading.Timer(8, self.nextplayer)
-        self.gametimer.start()
+        try:
+            if self.onclock==True:
+                np=self.currentplayer.number+1
+                if np>len(self.playerlist):
+                    np=1
+            else:
+                np=self.currentplayer.number-1
+                if np<1:
+                    np=len(self.playerlist)
+            for ids in self.playerlist:
+                if self.playerlist[ids].number==np:
+                    curplayer=self.playerlist[ids]
+            curplayer.active=True
+            self.currentplayer.active=False
+            self.currentplayer=curplayer
+            self.currentplayer.turn(self.id)
+            self.gametimer=threading.Timer(8, self.nextplayer)
+            self.gametimer.start()
+        except Exception as e:
+            print('Ошибка:\n', traceback.format_exc())
+            bot.send_message(441399484, traceback.format_exc())
     
 
     def m_update(self):   # Обновление списка игроков
