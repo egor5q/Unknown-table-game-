@@ -1,4 +1,10 @@
 # -*- coding: utf-8 -*-
+import random
+import os
+import telebot
+token = os.environ['TELEGRAM_TOKEN']
+bot = telebot.TeleBot(token)
+
 import lobbys
 import tools
 import cards
