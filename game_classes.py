@@ -187,6 +187,8 @@ class Game:
         self.currentplayer.active=False
         self.currentplayer=curplayer
         self.currentplayer.turn(self.id)
+        self.gametimer=threading.Timer(8, self.nextplayer)
+        self.gametimer.start()
     
 
     def m_update(self):   # Обновление списка игроков
