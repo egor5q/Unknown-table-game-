@@ -84,6 +84,8 @@ class Flame(Card):
         nears=findnear(player, game)
         if target in nears and target.defence==False:
             target.alive=False
+            bot.send_message(game.id, player.name+' сжигает '+target.name+' заживо!')
+            player.cards.remove(self)
             return True
         return False
         
@@ -105,6 +107,7 @@ class Analysis(Card):
             for ids in target.cards:
                 text+=ids.name+'\n'
             bot.send_message(player.id, 'Карты в руке игрока '+target.name+':\n\n'+text)
+            bot.send_message(game.id, player.name+' использует карту "'+self.name+'" на '+target.name+'!')
             player.cards.remove(self)
             return True
         return False
@@ -160,6 +163,7 @@ class Untruth(Card):
             cards.append(ids)
         x=random.choice(cards)
         bot.send_message(player.id,'Вы смотрите случайную карту игрока '+target.name+'. Ей оказалась карта "'+x.name+'"!')
+        bot.send_message(game.id, player.name+' использует карту "'+self.name+'" на '+target.name+'!')
         player.cards.remove(self)
         return True
         
@@ -203,6 +207,7 @@ class Persistence(Card):   # Упорство
             cards.remove(x)
             i+=1
         player.showlist=show   
+        player.cards.remove(self)
         return True
         
 class Around(Card):
@@ -296,6 +301,7 @@ class Stayhere(Card):
         
     def use(self, player, target, game):
         bot.send_message(game.id, player.name+' отказался от обмена местами с '+target.name+' с помощью карты "Мне и здесь неплохо"!')
+        player.cards.remove(self)
         return True
     
 class Nothx(Card):
@@ -308,6 +314,7 @@ class Nothx(Card):
         
     def use(self, player, target, game):
         bot.send_message(game.id, player.name+' отказался от обмена картами с '+target.name+' с помощью карты "Нет уж, спасибо!"!')
+        player.cards.remove(self)
         return True
     
 class Miss(Card):
@@ -319,6 +326,7 @@ class Miss(Card):
         self.code='miss'
         
     def use(self, player, target, game):
+        player.cards.remove(self)
         return True
     
 class Nofire(Card):
@@ -331,6 +339,7 @@ class Nofire(Card):
         
     def use(self, player, target, game):
         bot.send_message(game.id, player.name+' надел противогаз! Игроку '+target.name+' не удалось сжечь его.')
+        player.cards.remove(self)
         return True
 
 class Carantine(Card):
