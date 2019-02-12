@@ -4,7 +4,7 @@ import telebot
 token = os.environ['TELEGRAM_TOKEN']
 bot = telebot.TeleBot(token)
 
-class Card(self):
+class Card():
     
     def __init__(self):
         self.type=None    # infection/action/defence/barrier/panica/unknown
