@@ -23,25 +23,25 @@ class Card:
     def findnear(player,game):
         x=player.number
         near1=x+1
-        if near1>len(game.players):
+        if near1>len(game.playerlist):
             near1=1
         near2=x-1
         if near2<1:
-            near2=len(game.players)
+            near2=len(game.playerlist)
         for ids in game.players:
-            if ids.place==near1:
-                near1=ids
-        for ids in game.players:
-            if ids.place==near2:
-                near2=ids
+            if game.playerlist[ids].place==near1:
+                near1=game.playerlist[ids]
+        for ids in game.playerlist:
+            if game.playerlist[ids].place==near2:
+                near2=game.playerlist[ids]
         nears=[near1, near2]
         return nears
     
     def allplayers(player,game):
         nears=[]
-        for ids in game.players:
-            if ids.id!=player.id:
-                nears.append(ids)
+        for ids in game.playerlist:
+            if game.playerlist[ids].id!=player.id:
+                nears.append(game.playerlist[ids])
         return nears
     
 class Unknown(Card):
