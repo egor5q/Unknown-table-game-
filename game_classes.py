@@ -252,8 +252,8 @@ def inline(call):
     kb=types.InlineKeyboardMarkup()
     game=games[int(call.data.split(' ')[1])]
     for ids in game.playerlist:
-        if ids.id==call.from_user.id:
-            user=ids
+        if game.playerlist[ids].id==call.from_user.id:
+            user=game.playerlist[ids]
     if 'playcard' in call.data:
         for ids in user.cards:
             kb.add(types.InlineKeyboardButton(text=ids.name, callback_data='info '+str(chat.id)+' '+ids.code))
