@@ -265,10 +265,10 @@ def findnearenemy(player,game):
         if near2<1:
             near2=len(game.playerlist)
         for ids in game.playerlist:
-            if ids.place==near1:
+            if game.playerlist[ids].place==near1:
                 near1=ids
         for ids in game.playerlist:
-            if ids.place==near2:
+            if game.playerlist[ids].place==near2:
                 near2=ids
         nears=[near1, near2]
         return nears 
