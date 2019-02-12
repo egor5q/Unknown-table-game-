@@ -8,7 +8,7 @@ bot = telebot.TeleBot(token)
 import threading
 
 import lobbys
-import tools
+from tools import medit
 import cards
 games=lobbys.games
 
@@ -257,6 +257,7 @@ def inline(call):
     if 'playcard' in call.data:
         for ids in user.cards:
             kb.add(types.InlineKeyboardButton(text=ids.name, callback_data='info '+str(chat.id)+' '+ids.code))
+        medit('Выберите карту:', call.message.chat.id, call.message.message_id, reply_markup=kb)
         
     if 'info' in call.data:
         x=call.data.split(' ')[2]
