@@ -90,9 +90,11 @@ def inline(call):
               for ids in user.cards:
                   if ids.code==x:
                       card=ids
+                      info=ids.info
+                      typee=ids.type
               if card!=None:
-                  text=card.info
-                  if card.type!='unknown' and card.type!='infection':
+                  text=info
+                  if typee!='unknown' and typee!='infection':
                       kb.add(types.InlineKeyboardButton(text='⚡️Использовать карту', callback_data='usecard '+str(chat.id)+' '+x))
                   kb.add(types.InlineKeyboardButton(text='↩️Назад', callback_data='mainmenu '+str(chat.id)))
                   medit(text, call.message.chat.id, call.message.message_id, reply_markup=kb, parse_mode='markdown')
