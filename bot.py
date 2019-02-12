@@ -132,9 +132,13 @@ def inline(call):
                                           enemy=enm
                               else:
                                   enemy=user
-                              t=threading.Timer(10, card.use, args=[user, enemy, chat])
-                              t.start()
-                              enemy.defmenu(card)
+                              if card.cancancelled!=[]:
+                                  t=threading.Timer(10, card.use, args=[user, enemy, chat])
+                                  t.start()
+                                  enemy.defmenu(card)
+                              else:
+                                  card.use(user, enemy, chat)
+                              medit('Выбрано: "'+card.name+'".', call.message.chat.id, call.message.message_id)
                       else:
                           bot.answer_callback_query(call.id, 'Сейчас не ваш ход!')
                           
