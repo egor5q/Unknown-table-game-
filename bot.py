@@ -31,7 +31,7 @@ def creategame(m):
             msg=bot.send_message(m.chat.id,'Набор участников для экспедиции открыт! Жмите "Присоединиться" для вступления в игру.',reply_markup=kb)
             game=games[m.chat.id]
             game.message=msg
-            t=threading.Timer(5,game.cancelgame)
+            t=threading.Timer(30,game.cancelgame)
             t.start()
             game.canceltimer=t
         else:
