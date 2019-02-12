@@ -239,6 +239,7 @@ class Newplace_far(Card):
         self.code='newplace_far'
         self.cancancelled=['stayhere']
         self.targetable=True
+        self.info='Хуй'
         
     def use(self, player, target, game):
         nearplayers=allplayers(player,game)
@@ -255,6 +256,7 @@ class Soblazn(Card):
         self.code='soblazn'
         self.cancancelled=['scare', 'nothx', 'miss']
         self.targetable=True
+        self.info='Хуй'
         
     def use(self, player, target, game):
         player.cards.remove(self)
@@ -267,6 +269,7 @@ class Scare(Card):
         self.name='Страх'
         self.type='defence'
         self.code='scare'
+        self.info='Хуй'
         
     def use(self, player, target, game):
         bot.send_message(player.id, 'Карта, от которой вы отказались: "'+target.tradecard.name+'".')
@@ -279,6 +282,7 @@ class Stayhere(Card):
         self.name='Мне и здесь неплохо'
         self.type='defence'
         self.code='stayhere'
+        self.info='Хуй'
         
     def use(self, player, target, game):
         bot.send_message(game.id, player.name+' отказался от обмена местами с '+target.name+' с помощью карты "Мне и здесь неплохо"!')
@@ -290,6 +294,7 @@ class Nothx(Card):
         self.name='Нет уж, спасибо!'
         self.type='defence'
         self.code='nothx'
+        self.info='Хуй'
         
     def use(self, player, target, game):
         bot.send_message(game.id, player.name+' отказался от обмена картами с '+target.name+' с помощью карты "Нет уж, спасибо!"!')
@@ -301,6 +306,7 @@ class Miss(Card):
         self.name='Мимо!'
         self.type='defence'
         self.code='miss'
+        self.info='Хуй'
         
     def use(self, player, target, game):
         return True
@@ -311,6 +317,7 @@ class Nofire(Card):
         self.name='Никакого шашлыка!'
         self.type='defence'
         self.code='nofire'
+        self.info='Хуй'
         
     def use(self, player, target, game):
         bot.send_message(game.id, player.name+' надел противогаз! Игроку '+target.name+' не удалось сжечь его.')
