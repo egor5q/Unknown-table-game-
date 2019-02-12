@@ -43,7 +43,7 @@ def creategame(m):
             
   
 @bot.message_handler(commands=['del'])
-def del(m):
+def delett(m):
     try:
         del games[m.chat.id]
         bot.send_message(m.chat.id, 'Игра была удалена!')
