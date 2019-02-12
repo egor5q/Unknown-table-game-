@@ -24,7 +24,7 @@ bot = telebot.TeleBot(token)
 def creategame(m):
     if m.chat.id not in games:
         if m.chat.id!=m.from_user.id:
-            game=lobbys.Game(m)
+            game=game_classes.Game(m)
             games.update({game.id:game})
             kb=types.InlineKeyboardMarkup()
             kb.add(types.InlineKeyboardButton(text='Присоединиться',callback_data='join'))
