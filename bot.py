@@ -116,17 +116,26 @@ def inline(call):
                   print(card)
                   if card.type=='action' or card.type=='barrier':
                       if user.active:
-                          if card.targetable and target==None:
-                              if card.targetall:
-                                  enemies=findallenemy(user, game)
+                          if card.targetable:
+                              if target==None:
+                                  if card.targetall:
+                                      enemies=findallenemy(user, game)
+                                  else:
+                                      enemies=findnearenemy(user, game)
+                                  if card.target_self:
+                                      enemies.append(user)
+                                  for ids in enemies:
+                                      kb.add(types.InlineKeyboardButton(text=ids.name, callback_data='usecard '+str(chat.id)+' '+x+' '+str(ids.id)))
+                                  kb.add(types.InlineKeyboardButton(text='Назад', callback_data='mainmenu'))
+                                  medit('Выберите цель для карты "'+card.name+'":', call.message.chat.id, call.message.message_id, reply_markup=kb)
                               else:
-                                  enemies=findnearenemy(user, game)
-                              if card.target_self:
-                                  enemies.append(user)
-                              for ids in enemies:
-                                  kb.add(types.InlineKeyboardButton(text=ids.name, callback_data='usecard '+str(chat.id)+' '+x+' '+str(ids.id)))
-                              kb.add(types.InlineKeyboardButton(text='Назад', callback_data='mainmenu'))
-                              medit('Выберите цель для карты "'+card.name+'":', call.message.chat.id, call.message.message_id, reply_markup=kb)
+                                  if card.cancancelled!=[]:
+                                      t=threading.Timer(10, card.use, args=[user, enemy, chat])
+                                      t.start()
+                                      enemy.defmenu(card)
+                                  else:
+                                      card.use(user, enemy, chat)
+                                  medit('Выбрано: "'+card.name+'".', call.message.chat.id, call.message.message_id)
                           else:
                               try:
                                   enm=call.data.split(' ')[3]
@@ -139,7 +148,6 @@ def inline(call):
                                           enemy=chat.playerlist[ids]
                               else:
                                   enemy=user
-                              user.target=enemy
                               if card.cancancelled!=[]:
                                   t=threading.Timer(10, card.use, args=[user, enemy, chat])
                                   t.start()
