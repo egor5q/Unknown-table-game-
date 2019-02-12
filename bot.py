@@ -41,7 +41,15 @@ def creategame(m):
         else:
             bot.send_message(m.chat.id, 'В эту игру нельзя играть в личке! Добавьте бота в какой-нибудь чат.')
             
-            
+  
+@bot.message_handler(commands=['del'])
+def del(m):
+    try:
+        del games[m.chat.id]
+        bot.send_message(m.chat.id, 'Игра была удалена!')
+    except:
+        pass
+
 @bot.message_handler(commands=['startgame'])
 def startgame(m):
     try:
