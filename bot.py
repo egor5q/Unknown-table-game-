@@ -132,9 +132,9 @@ def inline(call):
                                   if card.cancancelled!=[]:
                                       t=threading.Timer(10, card.use, args=[user, target, chat])
                                       t.start()
-                                      enemy.defmenu(card)
+                                      target.defmenu(card)
                                   else:
-                                      card.use(user, enemy, chat)
+                                      card.use(user, target, chat)
                                   medit('Выбрано: "'+card.name+'".', call.message.chat.id, call.message.message_id)
                           else:
                               try:
