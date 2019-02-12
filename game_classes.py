@@ -271,14 +271,7 @@ def findnearenemy(player,game):
             if ids.place==near2:
                 near2=ids
         nears=[near1, near2]
-        return nears
-    
-def allplayers(player,game):
-    nears=[]
-    for ids in game.players:
-        if ids.id!=player.id:
-            nears.append(ids)
-    return nears  
+        return nears 
         
             
 def codetoclass(x):
