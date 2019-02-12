@@ -89,9 +89,7 @@ def inline(call):
               card=None
               for ids in user.cards:
                   if ids.code==x:
-                      card=ids
-                      info=ids.info
-                      typee=ids.type
+                      card=ids()
               if card!=None:
                   text=info
                   if typee!='unknown' and typee!='infection':
