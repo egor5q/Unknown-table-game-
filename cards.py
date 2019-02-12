@@ -9,7 +9,7 @@ class Card:
     def __init__(self):
         self.type=None    # infection/action/defence/barrier/panica/unknown
         self.dropable=True
-        self.name=None
+        self.name='Name=None'
         self.code='none'
         self.info='Информация отсутствует.'
         self.targetable=False
