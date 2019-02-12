@@ -108,7 +108,7 @@ def inline(call):
                   if card.type=='action' or card.type=='barrier':
                       if user.active:
                           if card.targetable and user.target==None:
-                              if card.target_all:
+                              if card.targetall:
                                   enemies=findallenemy(user, game)
                               else:
                                   enemies=findnearenemy(user, game)
