@@ -150,12 +150,12 @@ class Game:
         #Тут будет раздача карт игрокам и перемешивание колоды
         place=1
         for ids in self.playerlist:
-            ids.chatid=self.id
-            self.playerlist[ids]['place']=place
+            self.playerlist[ids].chatid=self.id
+            self.playerlist[ids].place=place
             i=0
             while i<self.handcards:
                 x=random.choice(self.deck)
-                self.playerlist[ids]['cards'].append(x)
+                self.playerlist[ids].cards.append(x)
                 self.deck.remove(x)
                 i+=1
             place+=1
