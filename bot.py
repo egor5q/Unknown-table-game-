@@ -106,9 +106,9 @@ def inline(call):
                   if ids.code==x:
                       card=ids
               try:
-                  target=call.data.split(' ')[3]
+                  trgt=call.data.split(' ')[3]
                   for ids in chat.playerlist:
-                      if chat.playerlist[ids].id==int(target):
+                      if chat.playerlist[ids].id==int(trgt):
                           target=chat.playerlist[ids]
               except:
                   target=None
