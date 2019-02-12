@@ -51,19 +51,19 @@ def startgame(m):
 @bot.callback_query_handler(func=lambda call:True)
 def inline(call): 
     if call.data=='join':
-    try:
-        game=games[call.message.chat.id]
-    except:
-        game=None
-    if game!=None:
-        if game.started==False:
-            if call.from_user.id not in game.playerlist:
-                game.createplayer(call.from_user)
-                bot.send_message(call.message.chat.id,call.from_user.first_name+' присоединился!')
-                game.m_update()
-    else:
-        bot.send_message(call.message.chat.id, call.from_user.first_name+', в этом чате нет запущенной игры! Сначала начните её '+
-                         'командой /creategame.')
+        try:
+            game=games[call.message.chat.id]
+        except:
+            game=None
+        if game!=None:
+            if game.started==False:
+                if call.from_user.id not in game.playerlist:
+                    game.createplayer(call.from_user)
+                    bot.send_message(call.message.chat.id,call.from_user.first_name+' присоединился!')
+                    game.m_update()
+        else:
+            bot.send_message(call.message.chat.id, call.from_user.first_name+', в этом чате нет запущенной игры! Сначала начните её '+
+                             'командой /creategame.')
       
    
 
