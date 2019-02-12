@@ -190,7 +190,7 @@ class Game:
     def m_update(self):   # Обновление списка игроков
         text='Список игроков:\n\n'
         for ids in self.playerlist:
-            text+=ids['name']+'\n'
+            text+=self.playerlist[ids]['name']+'\n'
         tools.medit(text, self.message.chat.id, self.message.message_id)
         
     def cancelgame(self):
