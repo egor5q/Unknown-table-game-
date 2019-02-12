@@ -170,7 +170,7 @@ class Game:
                 np=1
         else:
             np=self.currentplayer.number-1
-            if np<1
+            if np<1:
                 np=len(self.playerlist)
         for ids in self.playerlist:
             if ids.number==np:
