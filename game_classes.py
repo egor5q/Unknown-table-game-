@@ -123,7 +123,7 @@ class Game:
                     i+=1
             
         self.id=m.chat.id
-        self.playerlist={},
+        self.playerlist={}
         self.started=False
         self.message=None
         self.canceltimer=None
