@@ -13,7 +13,7 @@ class Card:
         self.code='none'
         self.info='Информация отсутствует.'
         self.targetable=False
-        self.target_all=False
+        self.targetall=False
         self.target_self=False
         self.cancancelled=[]     # Чем можно отменить эффект этой карты
 
