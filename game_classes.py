@@ -123,6 +123,7 @@ class Game:
                 while i<c:
                     deck.append(cards.Nofire)
                     i+=1
+        print(deck)
             
         self.id=m.chat.id
         self.playerlist={}
