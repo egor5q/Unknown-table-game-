@@ -13,6 +13,8 @@ import cards
 from tools import medit
 games=lobbys.games
 
+from game_classes import codetoclass, findallenemy, findnearenemy
+
 token = os.environ['TELEGRAM_TOKEN']
 bot = telebot.TeleBot(token)
 
