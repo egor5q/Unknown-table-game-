@@ -11,7 +11,7 @@ class Card:
         self.targetable=False
         self.target_all=False
         self.target_self=False
-        self.cancancelled=True      # Можно ли отменить защитной картой
+        self.cancancelled=[]     # Чем можно отменить эффект этой карты
 
     def use(self, player, target=None, game=None):
         return False
@@ -69,6 +69,7 @@ class Flame(Card):
         self.type='action'
         self.code='flame'
         self.targetable=True
+        self.cancancelled=['nofire']
         self.info='*Огнемёт*\n\nС помощью этой штуки вы можете сжечь любого соседнего игрока - и если у него нет карты "Никакого шашлыка!", '+\
         'то он выбывает из игры.'
     
@@ -216,6 +217,7 @@ class Newplace_near(Card):
         self.type='action'
         self.code='newplace_near'
         self.targetable=True
+        self.cancancelled=['stayhere']
         self.info='*Меняемся местами!*\n\nУ меня нехорошее предчувствие, надо сваливать отсюда! Использовав, вы меняетесь местами с '+\
         'соседним игроком.'
         
@@ -231,11 +233,11 @@ class Newplace_far(Card):
         self.name='Сматывай удочки!'
         self.type='action'
         self.code='newplace_far'
+        self.cancancelled=['stayhere']
         self.targetable=True
         
     def use(self, player, target, game):
         nearplayers=allplayers(player,game)
-        player.nears=nearplayers
         player.cards.remove(self)
         return True
         
@@ -247,6 +249,7 @@ class Soblazn(Card):
         self.name='Соблазн'
         self.type='action'
         self.code='soblazn'
+        self.cancancelled=['scare', 'nothx', 'miss']
         self.targetable=True
         
     def use(self, player, target, game):
