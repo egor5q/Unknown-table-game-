@@ -1,4 +1,8 @@
 import random
+import os
+import telebot
+token = os.environ['TELEGRAM_TOKEN']
+bot = telebot.TeleBot(token)
 
 class Card:
     
