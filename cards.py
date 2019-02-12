@@ -11,6 +11,7 @@ class Card:
         self.targetable=False
         self.target_all=False
         self.target_self=False
+        self.cancancelled=True      # Можно ли отменить защитной картой
 
     def use(self, player, target=None, game=None):
         return False
@@ -85,6 +86,7 @@ class Analysis(Card):
         self.type='action'
         self.code='analysis'
         self.targetable=True
+        self.cancancelled=False
         self.info='*Анализ*\n\nЭта карта позволит вам посмотреть ВСЕ карты на руке соседнего игрока.'
     
     def use(self, player, target, game):
@@ -106,6 +108,7 @@ class Axe(Card):
         self.code='axe'
         self.targetable=True
         self.target_self=True
+        self.cancancelled=False
         self.info='*Топор*\n\nОТКРЫВАЙ, ЭТО ДЖОННИ! Сломайте любую соседнюю дверь или снимите карантин с себя или соседнего игрока.'
         
     def use(self, player, target, game):
@@ -137,6 +140,7 @@ class Untruth(Card):
         self.type='action'
         self.code='untruth'
         self.targetable=True
+        self.cancancelled=False
         self.info='*Недоверие*\n\nПосмотрите случайную карту на руке соседнего игрока.'
         
     def use(self, player, target, game=None):
