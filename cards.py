@@ -4,7 +4,7 @@ import telebot
 token = os.environ['TELEGRAM_TOKEN']
 bot = telebot.TeleBot(token)
 
-class Card():
+class Card:
     
     def __init__(self):
         self.type=None    # infection/action/defence/barrier/panica/unknown
@@ -47,6 +47,7 @@ class Card():
 class Unknown(Card):
     
     def __init__(self):
+        super().__init__()
         self.type='unknown'
         self.dropable=False
         self.name='Нечто'
@@ -57,6 +58,7 @@ class Unknown(Card):
 class Infection(Card):
     
     def __init__(self):
+        super().__init__()
         self.type='infection'
         self.name='Заражение'
         self.code='infection'
@@ -69,6 +71,7 @@ class Infection(Card):
     
 class Flame(Card):
     def __init__(self):
+        super().__init__()
         self.name='Огнемёт'
         self.type='action'
         self.code='flame'
@@ -87,6 +90,7 @@ class Flame(Card):
 class Analysis(Card):
     
     def __init__(self):
+        super().__init__()
         self.name='Анализ'
         self.type='action'
         self.code='analysis'
@@ -108,6 +112,7 @@ class Analysis(Card):
 class Axe(Card):
     
     def __init__(self):
+        super().__init__()
         self.name='Топор'
         self.type='action'
         self.code='axe'
@@ -141,6 +146,7 @@ class Axe(Card):
 class Untruth(Card):
     
     def __init__(self):
+        super().__init__()
         self.name='Подозрение'
         self.type='action'
         self.code='untruth'
@@ -160,6 +166,7 @@ class Untruth(Card):
 class Viski(Card):
     
     def __init__(self):
+        super().__init__()
         self.name='Виски'
         self.type='action'
         self.code='viski'
@@ -177,6 +184,7 @@ class Viski(Card):
 class Persistence(Card):   # Упорство
      
     def __init__(self):
+        super().__init__()
         self.name='Упорство'
         self.type='action'
         self.code='persistence'
@@ -200,6 +208,7 @@ class Persistence(Card):   # Упорство
 class Around(Card):
     
     def __init__(self):
+        super().__init__()
         self.name='Гляди по сторонам'
         self.type='action'
         self.code='around'
@@ -217,6 +226,7 @@ class Around(Card):
 class Newplace_near(Card):
     
     def __init__(self):
+        super().__init__()
         self.name='Меняемся местами!'
         self.type='action'
         self.code='newplace_near'
@@ -234,6 +244,7 @@ class Newplace_near(Card):
 class Newplace_far(Card):
     
     def __init__(self):
+        super().__init__()
         self.name='Сматывай удочки!'
         self.type='action'
         self.code='newplace_far'
@@ -250,6 +261,7 @@ class Newplace_far(Card):
 class Soblazn(Card):
     
     def __init__(self):
+        super().__init__()
         self.name='Соблазн'
         self.type='action'
         self.code='soblazn'
@@ -264,6 +276,7 @@ class Soblazn(Card):
 class Scare(Card):
     
     def __init__(self):
+        super().__init__()
         self.name='Страх'
         self.type='defence'
         self.code='scare'
@@ -276,6 +289,7 @@ class Scare(Card):
 class Stayhere(Card):
     
     def __init__(self):
+        super().__init__()
         self.name='Мне и здесь неплохо'
         self.type='defence'
         self.code='stayhere'
@@ -287,6 +301,7 @@ class Stayhere(Card):
 class Nothx(Card):
     
     def __init__(self):
+        super().__init__()
         self.name='Нет уж, спасибо!'
         self.type='defence'
         self.code='nothx'
@@ -298,6 +313,7 @@ class Nothx(Card):
 class Miss(Card):
     
     def __init__(self):
+        super().__init__()
         self.name='Мимо!'
         self.type='defence'
         self.code='miss'
@@ -308,6 +324,7 @@ class Miss(Card):
 class Nofire(Card):
     
     def __init__(self):
+        super().__init__()
         self.name='Никакого шашлыка!'
         self.type='defence'
         self.code='nofire'
