@@ -119,7 +119,7 @@ def inline(call):
                               for ids in enemies:
                                   kb.add(types.InlineKeyboardButton(text=ids.name, callback_data='usecard '+str(chat.id)+' '+x+' '+str(ids.id)))
                               kb.add(types.InlineKeyboardButton(text='Назад', callback_data='mainmenu'))
-                              medit('Выберите цель для карты "'+card.name+'":', call.message.chat.id, call.message.message_id)
+                              medit('Выберите цель для карты "'+card.name+'":', call.message.chat.id, call.message.message_id, reply_markup=kb)
                           else:
                               try:
                                   enm=call.data.split(' ')[3]
