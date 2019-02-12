@@ -113,11 +113,11 @@ class Axe(Card):
         self.info='*Топор*\n\nОТКРЫВАЙ, ЭТО ДЖОННИ! Сломайте любую соседнюю дверь или снимите карантин с себя или соседнего игрока.'
         
     def use(self, player, target, game):
+        x=str(self.place)+'-'+str(target.place)
+        y=str(target.place)+'-'+str(self.place)
         if target==None:
             player.effects.remove('carantine')
             text=player.name+' снимает с себя карантин!'
-        x=str(self.place)+'-'+str(target.place)
-        y=str(target.place)+'-'+str(self.place)
         elif x in game.doors:
             game.doors.remove(x)
             text=player.name+' топором ломает дверь между собой и '+target.name+' с криками "ОТКРЫВАЙ, ЭТО ДЖОННИ!"'
