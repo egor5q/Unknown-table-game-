@@ -249,6 +249,7 @@ class Player:
          
 @bot.callback_query_handler(func=lambda call:True)
 def inline(call): 
+    print(call.data)
     kb=types.InlineKeyboardMarkup()
     game=games[int(call.data.split(' ')[1])]
     for ids in game.playerlist:
