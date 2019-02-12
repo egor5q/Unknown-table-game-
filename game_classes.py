@@ -182,7 +182,7 @@ class Game:
                 np=len(self.playerlist)
         for ids in self.playerlist:
             if self.playerlist[ids].number==np:
-                curplayer=ids
+                curplayer=self.playerlist[ids]
         curplayer.active=True
         self.currentplayer.active=False
         self.currentplayer=curplayer
