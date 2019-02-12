@@ -130,7 +130,7 @@ def inline(call):
                                   medit('Выберите цель для карты "'+card.name+'":', call.message.chat.id, call.message.message_id, reply_markup=kb)
                               else:
                                   if card.cancancelled!=[]:
-                                      t=threading.Timer(10, card.use, args=[user, enemy, chat])
+                                      t=threading.Timer(10, card.use, args=[user, target, chat])
                                       t.start()
                                       enemy.defmenu(card)
                                   else:
