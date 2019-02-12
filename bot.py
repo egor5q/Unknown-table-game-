@@ -93,9 +93,9 @@ def inline(call):
               print('Карта: ')
               print(card)
               if card!=None:
-                  text=info
-                  if typee!='unknown' and typee!='infection':
-                      kb.add(types.InlineKeyboardButton(text='⚡️Использовать карту', callback_data='usecard '+str(chat.id)+' '+x))
+                  text=card.info
+                  if card.type!='unknown' and card.type!='infection':
+                      kb.add(types.InlineKeyboardButton(text='⚡️Использовать карту', callback_data='usecard '+str(chat.id)+' '+card.code))
                   kb.add(types.InlineKeyboardButton(text='↩️Назад', callback_data='mainmenu '+str(chat.id)))
                   medit(text, call.message.chat.id, call.message.message_id, reply_markup=kb, parse_mode='markdown')
               
