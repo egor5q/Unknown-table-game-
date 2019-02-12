@@ -105,11 +105,18 @@ def inline(call):
               for ids in user.cards:
                   if ids.code==x:
                       card=ids
+              try:
+                  target=call.data.split(' ')[3]
+                  for ids in chat.playerlist:
+                      if chat.playerlist[ids].id==int(target):
+                          target=chat.playerlist[ids]
+              except:
+                  target=None
               if card!=None:
                   print(card)
                   if card.type=='action' or card.type=='barrier':
                       if user.active:
-                          if card.targetable and user.target==None:
+                          if card.targetable and target==None:
                               if card.targetall:
                                   enemies=findallenemy(user, game)
                               else:
