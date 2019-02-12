@@ -315,12 +315,12 @@ def findnearenemy(player,game):
         nears=[near1, near2]
         return nears
     
-    def allplayers(player,game):
-        nears=[]
-        for ids in game.players:
-            if ids.id!=player.id:
-                nears.append(ids)
-        return nears  
+def allplayers(player,game):
+    nears=[]
+    for ids in game.players:
+        if ids.id!=player.id:
+            nears.append(ids)
+    return nears  
         
             
 def codetoclass(x):
