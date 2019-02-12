@@ -114,15 +114,21 @@ def inline(call):
                               if card.target_self:
                                   enemies.append(user)
                               for ids in enemies:
-                                  kb.add(types.InlineKeyboardButton(text=ids.name, callback_data='usecard '+str(chat.id)+' '+card.code+' '+str(ids.id)))
+                                  kb.add(types.InlineKeyboardButton(text=ids.name, callback_data='usecard '+str(chat.id)+' '+x+' '+str(ids.id)))
                               kb.add(types.InlineKeyboardButton(text='Назад', callback_data='mainmenu'))
                               medit('Выберите цель для карты "'+card.name+'":', call.message.chat.id, call.message.message_id)
                           else:
-                              enm=call.data.split(' ')[3]
+                              try:
+                                  enm=call.data.split(' ')[3]
+                              except:
+                                  enm=None
                               enemy=None
-                              for ids in chat.playerlist:
-                                  if ids.id==int(enm):
-                                      enemy=enm
+                              if enm!=None:
+                                  for ids in chat.playerlist:
+                                      if ids.id==int(enm):
+                                          enemy=enm
+                              else:
+                                  enemy=user
                               t=threading.Timer(10, card.use, args=[user, enemy, chat])
                               t.start()
                               enemy.defmenu(card)
