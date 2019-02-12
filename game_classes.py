@@ -152,7 +152,7 @@ class Game:
         place=1
         for ids in self.playerlist:
             self.playerlist[ids].chatid=self.id
-            self.playerlist[ids].place=place
+            self.playerlist[ids].number=place
             i=0
             while i<self.handcards:
                 x=random.choice(self.deck)
@@ -213,7 +213,7 @@ class Player:
         self.effects=[]      #все эффекты типо карантина, заколоченной двери итд
         self.cards=[]        #все карты в руке игрока
         self.alive=True
-        self.place=None
+        self.number=None
         self.active=False
         self.tradecard=None
         self.defence=False
