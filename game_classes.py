@@ -185,16 +185,24 @@ class Game:
             for ids in self.playerlist:
                 if self.playerlist[ids].number==np:
                     curplayer=self.playerlist[ids]
-            curplayer.active=True
-            self.currentplayer.active=False
-            self.currentplayer=curplayer
-            self.currentplayer.turn(self.id)
-            self.gametimer=threading.Timer(8, self.nextplayer)
-            self.gametimer.start()
+            if self.currentplayer.ready==False:
+                medit('Время вышло!', self.currentplayer.message.chat.id, self.currentplayer.message.message_id)
+            self.trade(self.currentplayer, curplayer)
+
         except Exception as e:
             print('Ошибка:\n', traceback.format_exc())
             bot.send_message(441399484, traceback.format_exc())
     
+    def trade(self, player1, player2, curplayer):        # Обмен картами между двумя игроками
+        self.nextturn(curplayer)
+        
+    def nextturn(self, curplayer):
+        curplayer.active=True
+        self.currentplayer.active=False
+        self.currentplayer=curplayer
+        self.currentplayer.turn(self.id)
+        self.gametimer=threading.Timer(8, self.nextplayer)
+        self.gametimer.start()
 
     def m_update(self):   # Обновление списка игроков
         kb=types.InlineKeyboardMarkup()
@@ -227,12 +235,12 @@ class Player:
         self.attacked=False
         self.target=None
         self.chatid=None
-        self.messages=[]
+        self.message=None
         
     def turn(self, chat):
         kb=types.InlineKeyboardMarkup()
         kb.add(types.InlineKeyboardButton(text='Разыграть карту',callback_data='playcard '+str(chat)),types.InlineKeyboardButton(text='Окончить ход',callback_data='endturn'))
-        self.messages.append(bot.send_message(self.id, 'Ваша очередь сделать ход.',reply_markup=kb))
+        self.message=bot.send_message(self.id, 'Ваша очередь сделать ход.',reply_markup=kb)
         
     def defmenu(self, card):
         kb=types.InlineKeyboardMarkup()
