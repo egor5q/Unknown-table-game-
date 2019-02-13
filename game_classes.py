@@ -294,7 +294,7 @@ class Player:
             'У вас есть 10 секунд.'
         else:
             text='На вас была разыграна карта "'+card.name+'", но у вас нет подходящих карт для защиты.'
-        self.messages.append(bot.send_message(self.id, text, reply_markup=kb))
+        self.message=bot.send_message(self.id, text, reply_markup=kb)
                          
         
                 
