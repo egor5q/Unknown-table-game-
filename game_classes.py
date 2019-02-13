@@ -47,7 +47,7 @@ class Game:
                     i+=1
             if ids=='axe':
                 i=0
-                c=2
+                c=0
                 while i<c:
                     deck.append(cards.Axe())
                     i+=1
@@ -113,7 +113,7 @@ class Game:
                     i+=1
             if ids=='miss':
                 i=0
-                c=1
+                c=0
                 while i<c:
                     deck.append(cards.Miss())
                     i+=1
@@ -226,9 +226,22 @@ class Game:
         self.currentplayer.active=False
         self.currentplayer=curplayer
         self.currentplayer.turn(self.id)
-        self.gametimer=threading.Timer(8, self.nextplayer)
+        self.dropvars()
+        self.gametimer=threading.Timer(4, self.nextplayer)
         self.gametimer.start()
 
+
+    def dropvars(self):
+        self.traders=[] 
+        for ids in self.playerlist:
+            self.playerlist[ids].tradecard=None
+            self.playerlist[ids].defence=False
+            self.playerlist[ids].attacked=False
+            self.playerlist[ids].target=None
+            self.playerlist[ids].message=None
+            self.playerlist[ids].fortrade=None
+            
+         
     def m_update(self):   # Обновление списка игроков
         kb=types.InlineKeyboardMarkup()
         kb.add(types.InlineKeyboardButton(text='Присоединиться',callback_data='join'))
