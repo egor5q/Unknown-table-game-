@@ -137,6 +137,7 @@ class Game:
         self.currentplayer=None
         self.doors=[]
         self.onclock=True  # Ход по часовой стрелке или против
+        self.traders=[]    # 2 меняющихся игрока
     
 
     def createplayer(self,user):
@@ -194,9 +195,33 @@ class Game:
             bot.send_message(441399484, traceback.format_exc())
     
     def trade(self, player1, player2, curplayer):        # Обмен картами между двумя игроками
-        self.nextturn(curplayer)
+        kb=types.InlineKeyboardMarkup()
+        kbb=types.InlineKeyboardMarkup()
+        for ids in player1.cards:
+            kb.add(types.InlineKeyboardButton(text=ids.name, callback_data='trade '+str(self.id)+' '+ids.code))
+        for ids in player2.cards:
+            kbb.add(types.InlineKeyboardButton(text=ids.name, callback_data='trade '+str(self.id)+' '+ids.code))
+        bot.send_message(player1.id, 'Выберите карту для обмена с '+player2.name+':', reply_markup=kb)
+        bot.send_message(player2.id, 'Выберите карту для обмена с '+player1.name+':', reply_markup=kbb)
+        t=threading.Timer(15, self.nextturn, args=[curplayer])
+        t.start()
         
     def nextturn(self, curplayer):
+        for ids in self.traders:
+            if ids.fortrade==None:
+                tradable=[]
+                for idss in ids.cards:
+                    if idss.dropable:
+                        tradable.append(idss)
+                ids.fortrade=random.choice(tradable)
+                medit('Время вышло! Была выбрана случайная карта для обмена: "'+ids.fortrade.name+'".', ids.trademessage.chat.id, ids.trademessage.message_id)
+        self.traders[0].cards.remove(self.traders[0].fortrade)
+        self.traders[1].cards.remove(self.traders[1].fortrade)
+        self.traders[0].cards.append(self.traders[1].fortrade)
+        self.traders[1].cards.append(self.traders[0].fortrade)
+        bot.send_message(self.traders[0].id, 'Обменом получена карта: "'+self.traders[1].fortrade.name+'"!')
+        bot.send_message(self.traders[1].id, 'Обменом получена карта: "'+self.traders[0].fortrade.name+'"!')
+            
         curplayer.active=True
         self.currentplayer.active=False
         self.currentplayer=curplayer
@@ -236,6 +261,7 @@ class Player:
         self.target=None
         self.chatid=None
         self.message=None
+        self.fortrade=None
         
     def turn(self, chat):
         kb=types.InlineKeyboardMarkup()
