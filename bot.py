@@ -106,6 +106,18 @@ def inline(call):
                       kb.add(types.InlineKeyboardButton(text='⚡️Использовать карту', callback_data='usecard '+str(chat.id)+' '+card.code))
                   kb.add(types.InlineKeyboardButton(text='↩️Назад', callback_data='mainmenu '+str(chat.id)))
                   medit(text, call.message.chat.id, call.message.message_id, reply_markup=kb, parse_mode='markdown')
+                    
+          if 'trade' in call.data:
+              x=call.data.split(' ')[2]
+              card=None
+              for ids in user.cards:
+                  if ids.code==x:
+                      card=ids
+              if card!=None:
+                  user.fortrade=card
+                  medit('Выбрано для обмена: "'+card.name+'".',call.message.chat.id, call.message.message_id)
+              else:
+                  bot.answer_callback_query(call.id, 'У вас этого нет!')
               
           if 'usecard' in call.data:
               x=call.data.split(' ')[2]
