@@ -82,11 +82,14 @@ class Flame(Card):
     
     def use(self, player, target, game):
         nears=self.findnear(player, game)
-        if target in nears and target.defence==False:
-            target.alive=False
-            bot.send_message(game.id, player.name+' сжигает '+target.name+' заживо!')
-            player.cards.remove(self)
-            return True
+        if target in nears:
+            if target.defence==False:
+                target.alive=False
+                bot.send_message(game.id, player.name+' сжигает '+target.name+' заживо!')
+                player.cards.remove(self)
+                return True
+            else:
+                bot.send_message(game.id, player.name+' пытается сжечь '+target.name+', но тот защитился картой "Никакого шашлыка!".')
         return False
         
 class Analysis(Card):
