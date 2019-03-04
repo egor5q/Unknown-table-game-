@@ -23,7 +23,7 @@ class Game:
         for ids in allcards:
             if ids=='unknown':
                 i=0
-                c=1
+                c=0
                 while i<c:
                     deck.append(cards.Unknown())
                     i+=1
@@ -53,7 +53,7 @@ class Game:
                     i+=1
             if ids=='untruth':
                 i=0
-                c=2
+                c=4
                 while i<c:
                     deck.append(cards.Untruth())
                     i+=1
@@ -65,19 +65,19 @@ class Game:
                     i+=1
             if ids=='persistence':
                 i=0
-                c=2
+                c=0
                 while i<c:
                     deck.append(cards.Persistence())
                     i+=1
             if ids=='around':
                 i=0
-                c=0
+                c=3
                 while i<c:
                     deck.append(cards.Around())
                     i+=1
             if ids=='newplace_near':
                 i=0
-                c=2
+                c=3
                 while i<c:
                     deck.append(cards.Newplace_near())
                     i+=1
@@ -95,13 +95,13 @@ class Game:
                     i+=1
             if ids=='scare':
                 i=0
-                c=1
+                c=2
                 while i<c:
                     deck.append(cards.Scare())
                     i+=1
             if ids=='stayhere':
                 i=0
-                c=1
+                c=2
                 while i<c:
                     deck.append(cards.Stayhere())
                     i+=1
@@ -119,7 +119,7 @@ class Game:
                     i+=1
             if ids=='nofire':
                 i=0
-                c=1
+                c=2
                 while i<c:
                     deck.append(cards.Nofire())
                     i+=1
@@ -152,14 +152,23 @@ class Game:
     def preparegame(self):
         #Тут будет раздача карт игрокам и перемешивание колоды
         place=1
+        x=(len(self.playerlist)*4)-1
+        dck=[]
+        i=0
+        while i<x:
+            card=random.choice(self.deck)
+            dck.append(card)
+            self.deck.remove(card)
+            i+=1
+        dck.append(cards.Unknown())
         for ids in self.playerlist:
             self.playerlist[ids].chatid=self.id
             self.playerlist[ids].number=place
             i=0
             while i<self.handcards:
-                x=random.choice(self.deck)
+                x=random.choice(dck)
                 self.playerlist[ids].cards.append(x)
-                self.deck.remove(x)
+                dck.remove(x)
                 i+=1
             place+=1
         players=[]
@@ -227,7 +236,7 @@ class Game:
         self.currentplayer=curplayer
         self.currentplayer.turn(self.id)
         self.dropvars()
-        self.gametimer=threading.Timer(4, self.nextplayer)
+        self.gametimer=threading.Timer(40, self.nextplayer)
         self.gametimer.start()
 
 
